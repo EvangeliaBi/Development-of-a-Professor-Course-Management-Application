@@ -1,0 +1,7 @@
+Window_Search_Insert
+- contentPane : JPanel
+- text_LName : JTextField
+
++ main(String[])
++ run() 
++ clearForm() 
