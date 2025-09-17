@@ -1,0 +1,8 @@
+New_Register
+- contentPane : JPanel
+- textName : JTextField
+- textLName : JTextField
+
++ main(String[])
++ run() 
++ Digits(String) : boolean
