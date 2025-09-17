@@ -1,0 +1,9 @@
+Main_Application 
++ introapp : IntroApplicationPlatform
++ startwin : Application
++ insert : Window_Search_Insert
++ register : New_Register
++ results : Results
+
++ main(String[])
++ run()
