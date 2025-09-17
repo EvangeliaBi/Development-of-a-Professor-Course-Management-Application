@@ -5,8 +5,8 @@ import java.awt.EventQueue;
 import java.awt.event.*;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;			 
-import java.sql.ResultSet;					
+import java.sql.PreparedStatement;			// Γίνεται import η συγκεκριμένη διεπαφή(PreparedStatement, η οποία επεκτείνει την Statement) από το πακέτο java.sql, η οποία διεπαφή αναπαριστά ένα αντικείμενο μίας προκαθορισμένης δήλωσης SQL, καθώς αποθηκεύεται σε ένα αντικείμενο τύπου PreparedStatement, όπου το συγκεκριμένο αντικείμενο μπορεί να χρησιμοποιηθεί για την αποτελεσματική εκτέλεση αυτής της δήλωσης πολλές φορές, παρέχοντας την δυνατότητα μεταγλώττισης μίας SQL πρότασης και χρήσης ? σε αυτήν, καθώς τα συγκεκριμένα ? αντικαθίστανται από πραγματικά ορίσματα που θα βάλει ο χρήστης. Μέσω εισαγωγής της διεπαφής PreparedStatement, καθίσταται εφικτή η δημιουργία SQL εντολών παρέχοντας τα ? ως παραμέτρους, τα οποία επρόκειτο να αντικατασταθούν από τις τιμές που θα θέσει ο χρήστης της εφαρμογής μέσω κλήσης των μεθόδων(setString, setInt).  
+import java.sql.ResultSet;					// Γίνεται import η διεπαφή(ResultSet) από το πακέτο java.sql, όπου μόλις εκτελείται ένα ερώτημα(query) προς την βάση δεδομένων πραγματοποιείται επιστροφή των αποτελεσμάτων ως αντικείμενο της διεπαφής ResultSet καθώς μέσω του αντικειμένου αυτού παρουσιάζονται οι τιμές υπό μορφή πίνακα με γραμμές και στήλες αφού η προσπέλαση στα στοιχεία του πίνακα γίνεται ανά μία γραμμή κάθε φορά ενώ ταυτόχρονα περιέχει έναν δείκτη προς την αναφερόμενη τιμή με την ένδειξη μίας θέσης πριν την πρώτη γραμμή του πίνακα αφού για να πραγματοποιηθεί μετακίνηση του δείκτη στην επόμενη γραμμή γίνεται μέσω χρήσης της μεθόδου next() της ResultSet. Στην περίπτωση ύπαρξης επόμενης γραμμής η μέθοδος next() επιστρέφει την τιμή true ειδάλλως σε περίπτωση που ο πίνακας έχει φτάσει στο τέλος του επιστρέφεται τιμή false. Η λήψη των τιμών από τις στήλες του πίνακα της τρέχουσας γραμμής πραγματοποιείται με μεθόδους όπως οι getInt(), getString() με σκοπό την επεξεργασία των αποτελεσμάτων που προκύπτουν από τις εγγραφές της βάσης δεδομένων.
 import java.sql.SQLException;
 
 import javax.swing.*;
@@ -18,7 +18,7 @@ public class Window_Search_Insert extends JFrame {
     private JPanel contentPane;
     private JTextField text_LName;
 
-    	
+    	// Εκτέλεση παραθύρου από την μέθοδο main.
   //  public static void main(String[] args) {
      //   EventQueue.invokeLater(new Runnable() {
        // 	public void run() {
@@ -32,123 +32,125 @@ public class Window_Search_Insert extends JFrame {
     //    });
    // }
 
-     
+     // Δημιουργία παραθύρου-από εδώ ξεκινά ο κατασκευαστής.
     public Window_Search_Insert() {
-        setBackground(new Color(240, 248, 255));					
-        addWindowListener(new WindowAdapter() {						
+        setBackground(new Color(240, 248, 255));					// Βάζω ένα background χρώμα για το JFrame.
+        addWindowListener(new WindowAdapter() {						// Προσθήκη window listener για να λαμβάνει τα συμβάντα που προκύπτουν από το παράθυρο επιτρέποντας την υλοποίηση μόνο των μεθόδων που χρειάζεται λόγω και του window adapter.
             @Override
-            public void windowClosing(WindowEvent e) {				
-                Main_Application.startwin.setEnabled(true);			
+            public void windowClosing(WindowEvent e) {				// Όταν ο χρήστης κλείσει το παράθυρο εκτελείται το σώμα της μεθόδου αυτής.
+                Main_Application.startwin.setEnabled(true);			// Καλείται το public static πεδίο startwin της κύριας κλάσης(που τρέχει όλο το πρόγραμμα) κι όταν το τρέχον παράθυρο κλείνει τότε ενεργοποιείται ξανά το προηγούμενο παράθυρο(δηλαδή το control panel).
             }
         });
         setTitle("Search/Insert Window");						
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);				
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);				// Κάθε φορά που το τρέχον παράθυρο κλείνει, δεν καταστρέφεται αλλά απλώς κρύβεται (HIDE_ON_CLOSE). Αυτό μπορεί να είναι χρήσιμο όταν θέλουμε το παράθυρο να μπορεί να ξαναανοίξει χωρίς να δημιουργείται νέο αντικείμενο.
         setBounds(100, 100, 450, 300);
 
-        
-        contentPane = new JPanel();								
+        // Κύριο πάνελ με BorderLayout
+        contentPane = new JPanel();								// Δημιουργία panel που θα λειτουργεί ως κύριο container.
         contentPane.setBackground(new Color(240, 248, 255));
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));			
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));			// Ορισμός εωτερικών κενών περιθωρίων 5px γύρω από τα περιεχόμενα.
         contentPane.setLayout(new BorderLayout());
-        setContentPane(contentPane);							
+        setContentPane(contentPane);							// Καθορισμός του κύριου panel για το παράθυρο.
 
-        
-        JPanel pnlNorth = new JPanel();								
-        pnlNorth.setBackground(new Color(230, 230, 250));			
-        JLabel lblInsert = new JLabel("Search / Insert");			
-        lblInsert.setHorizontalAlignment(SwingConstants.CENTER);		
+        // Header panel στο NORTH με τον τίτλο "Search / Insert"
+        JPanel pnlNorth = new JPanel();								// Δημιουργία panel στο επάνω μέρος(North) με FlowLayout.(Δες το IntroApplicationPlatform το pnlNorth για να συμπληρώσουμε από εκεί).
+        pnlNorth.setBackground(new Color(230, 230, 250));			// Καθορισμός χρώματος για αυτό το panel.
+        JLabel lblInsert = new JLabel("Search / Insert");			// Δημιουργεί μια ετικέτα που εμφανίζει τον τίτλο “Search / Insert.”
+        lblInsert.setHorizontalAlignment(SwingConstants.CENTER);		// Οριζόντιο κεντράρισμα του κειμένου της ετικέτας.
         lblInsert.setFont(new Font("Tahoma", Font.PLAIN, 20));
         lblInsert.setForeground(new Color(65, 105, 225));
-        pnlNorth.add(lblInsert);									
-        contentPane.add(pnlNorth, BorderLayout.NORTH);				
+        pnlNorth.add(lblInsert);									// Προσθήκη της ετικέτας(lblInsert) στο επάνω το πάνελ(pnlNorth).
+        contentPane.add(pnlNorth, BorderLayout.NORTH);				// Προσθήκη του header panel στην περιοχή North σύμφωνα με το BorderLayout.
 
-        JPanel pnlCenter = new JPanel(new GridBagLayout());			
+        // Κεντρικό πάνελ για τα στοιχεία με GridBagLayout
+        JPanel pnlCenter = new JPanel(new GridBagLayout());			// Δημιουργεί ένα νέο panel που χρησιμοποιεί το GridBagLayout. Αυτό το layout δίνει μεγάλη ευελιξία στην τοποθέτηση και ευθυγράμμιση των στοιχείων.
         pnlCenter.setBackground(new Color(230, 230, 250));
-        contentPane.add(pnlCenter, BorderLayout.CENTER);			
+        contentPane.add(pnlCenter, BorderLayout.CENTER);			// Τοποθετεί το κεντρικό panel στην περιοχή CENTER του παραθύρου.
 
-        
-        GridBagConstraints baseGbc = new GridBagConstraints();			
-        baseGbc.insets = new Insets(10, 10, 10, 10);					
+        // Δημιουργούμε μια "βάση" (base) για τις ρυθμίσεις
+        GridBagConstraints baseGbc = new GridBagConstraints();			// Δημιουργούμε ένα αντικείμενο GridBagConstraints το οποίο θα χρησιμοποιείται ως βάση (template) για τις ρυθμίσεις τοποθέτησης των components.
+        baseGbc.insets = new Insets(10, 10, 10, 10);					// Ορίζει εξωτερικά περιθώρια (margins) 10 pixel σε όλες τις πλευρές γύρω από κάθε στοιχείο, ώστε να υπάρχει επαρκής απόσταση μεταξύ τους.
 
-        GridBagConstraints gbcTop = (GridBagConstraints) baseGbc.clone();				
-        gbcTop.gridx = 0;						
-        gbcTop.gridy = 0;						
-        gbcTop.gridwidth = 3;					
-        gbcTop.weighty = 1.0;         
-        gbcTop.fill = GridBagConstraints.VERTICAL;				
-        pnlCenter.add(Box.createVerticalGlue(), gbcTop);		
+        GridBagConstraints gbcTop = (GridBagConstraints) baseGbc.clone();				// Κλωνοποιούμε τις βασικές ρυθμίσεις ώστε να μην αλλάξουμε το αρχικό baseGbc.
+        gbcTop.gridx = 0;						// Τοποθέτηση στην 1η στήλη.
+        gbcTop.gridy = 0;						// Τοποθέτηση στην 1η σειρά.
+        gbcTop.gridwidth = 3;					// Το στοιχείο θα απλωθεί σε 3 στήλες, καλύπτοντας ολόκληρο το πλάτος.
+        gbcTop.weighty = 1.0;         // Απορροφά τον επιπλέον κάθετο χώρο. Δίνει βάρος στην κατακόρυφη επέκταση, ώστε το vertical glue να απορροφά επιπλέον χώρο όταν το παράθυρο αλλάζει μέγεθος.
+        gbcTop.fill = GridBagConstraints.VERTICAL;				// Εξασφαλίζει ότι το στοιχείο θα επεκταθεί κατακόρυφα.
+        pnlCenter.add(Box.createVerticalGlue(), gbcTop);		// Δημιουργεί ένα αόρατο στοιχείο που "ενώνει" τα components και κατανέμει τον επιπλέον χώρο, βοηθώντας στην ομαλή κατανομή του περιεχομένου.
 
+        // Label "Last Name:"
         GridBagConstraints gbcLabel = (GridBagConstraints) baseGbc.clone();
-        gbcLabel.gridx = 0;						
-        gbcLabel.gridy = 1;						
-        gbcLabel.anchor = GridBagConstraints.EAST;		
+        gbcLabel.gridx = 0;						// Τοποθέτηση στην 1η στήλη.
+        gbcLabel.gridy = 1;						// Τοποθέτηση στην 2η σειρά.
+        gbcLabel.anchor = GridBagConstraints.EAST;		// Ευθυγράμμιση της ετικέτας στα δεξιά του container.
         JLabel lblLName = new JLabel("Last Name:");
         lblLName.setFont(new Font("Tahoma", Font.BOLD, 15));
         lblLName.setForeground(new Color(30, 144, 255));
-        pnlCenter.add(lblLName, gbcLabel);				
+        pnlCenter.add(lblLName, gbcLabel);				// Προσθήκη ετικέτας στο panel σύμφωνα με τις παραπάνω ρυθμίσεις.
 
-        
+        // TextField για Last Name
         GridBagConstraints gbcTextField = (GridBagConstraints) baseGbc.clone();
-        gbcTextField.gridx = 1;			
-        gbcTextField.gridy = 1;			
-        gbcTextField.anchor = GridBagConstraints.CENTER;		
-        text_LName = new JTextField(15);						
-        text_LName.setBackground(new Color(230, 230, 240));		
-        pnlCenter.add(text_LName, gbcTextField);				
+        gbcTextField.gridx = 1;			// 2η στήλη
+        gbcTextField.gridy = 1;			// 2η γραμμή
+        gbcTextField.anchor = GridBagConstraints.CENTER;		// Το στοιχείο κεντράρεται μέσα στο κελί του grid.
+        text_LName = new JTextField(15);						// Δημιουργεί ένα πεδίο κειμένου με 15 στήλες
+        text_LName.setBackground(new Color(230, 230, 240));		// Ορισμός φόντου πεδίου.
+        pnlCenter.add(text_LName, gbcTextField);				// Προσθήκη του πεδίου text_LName στο κεντρικό πάνελ.
 
-        
+        // Κουμπί "Search"
         GridBagConstraints gbcSearchButton = (GridBagConstraints) baseGbc.clone();
-        gbcSearchButton.gridx = 2;				
-        gbcSearchButton.gridy = 1;				
-        gbcSearchButton.anchor = GridBagConstraints.WEST;		
+        gbcSearchButton.gridx = 2;				// Τοποθέτηση του κουμπιού στην 3η στήλη.
+        gbcSearchButton.gridy = 1;				// Τοποθέτηση του κουμπιού στην 2η σειρά(γραμμή).
+        gbcSearchButton.anchor = GridBagConstraints.WEST;		//  Ευθυγραμμίζει το κουμπί προς τα αριστερά μέσα στο grid cell.
         JButton btnSearch = new JButton("Search");
         btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnSearch.setForeground(new Color(85, 107, 47));
         btnSearch.setBackground(new Color(144, 238, 144));
-        btnSearch.setIcon(new ImageIcon(Window_Search_Insert.class.getResource("/exetastiki_earino/images/search (1).png")));		
+        btnSearch.setIcon(new ImageIcon(Window_Search_Insert.class.getResource("/exetastiki_earino/images/search (1).png")));		// Θέτει ένα εικονίδιο στο κουμπί, το οποίο φορτώνεται από έναν συγκεκριμένο φάκελο πόρων (resources).
         
-        btnSearch.addActionListener(new ActionListener() {		
+        btnSearch.addActionListener(new ActionListener() {		// Προσθήκη ActionListener στο κουμπί για εκτέλεση του παρακάτω κώδικα όταν πατηθεί το κουμπί
             public void actionPerformed(ActionEvent e) {
-            	String last = text_LName.getText();		
-                if (last.isEmpty() || last.isBlank()) {		
-                    JOptionPane.showMessageDialog(contentPane, "Please insert the required field for the last name to proceed!", "Warning", JOptionPane.WARNING_MESSAGE);		
-                    return;		
+            	String last = text_LName.getText();		// Η μέθοδος getText() ανήκει στην κλάση JTextComponent καθώς επιστρέφει το περιεχόμενο του κειμένου που μπαίνει μέσα στο JTextField, το οποίο στην προκειμένη περίπτωση είναι το text_LName και αποθηκεύεται στην μεταβλητή last που είναι τύπου String καθιστώντας την συγκεκριμένη εντολή αλλά και πιο συγκεκριμένα το βήμα αυτό πολύ κρίσιμο, διότι βάσει αυτού αναλόγως της τιμής που θα δώσει ο χρήστης(εάν δηλαδή εισάγει έστω και κάποιους λίγους χαρακτήρες στο πεδίο κειμένου που είναι η περιοχή για την εισαγωγή του επωνύμου) εξαρτάται του εάν τελικά επιτευχθεί η αναζήτηση κι εν τέλει ανοίξει επιτυχώς το παράθυρο των αποτελεσμάτων. Λαμβάνει το περιεχόμενο του κειμένου που έχει τοποθετηθεί στο πεδίο text_LName μέσω της μεθόδου getText() και το εκχωρεί σε μία μεταβλητή τύπου String.
+                if (last.isEmpty() || last.isBlank()) {		// Μέσω της μεθόδου isEmpty(η οποία ανήκει στην κλάση String του πακέτου Java.lang με τύπο επιστροφής της μεθόδου μία boolean τιμή, η οποία επιστρέφει true μόνο εάν κι εφόσον το μήκος του αλφαριθμητικού ισοδυναμεί με το 0) καθώς και με την μέθοδο isBlank(), μέσω της οποίας παίρνουμε true εάν το πεδίο είναι κενό είτε εάν το πεδίο περιέχει κενά διαστήματα(τα λεγόμενα whitespaces), newlines/tabs κι έτσι πραγματοποιείται ένας έλεγχος στην περίπτωση που ο χρήστης δεν εισάγει καθόλου χαρακτήρες στο πεδίο κειμένου-άρα πρόκειται για κενή τιμή στο πεδίο που αφορά το text_LName-δηλαδή δεν έχει εισάγει χαρακτήρες στο πεδίο κειμένου είτε έχει πατήσει παρατεταμένα το spacebar με αποτέλεσμα να εκχωρούνται κενά διαστήματα, που αφορά την εισαγωγή του επωνύμου με αποτέλεσμα να παίρνουμε true από την συγκεκριμένη συνθήκη, αφού το μήκος του αλφαριθμητικού είναι ίσο με το 0 κι έτσι μπαίνοντας μέσα στο σώμα της δομής διακλάδωσης if εμφανίζεται στον χρήστη της εφαρμογής ένα αναδυόμενο παράθυρο ως προειδοποίηση για εισαγωγή χαρακτήρων προκειμένου να επιτευχθεί η αναζήτηση και να ανοίξει επιτυχώς το παράθυρο των αποτελεσμάτων, διότι σε διαφορετική περίπτωση μή εισαγωγής χαρακτήρων στο επώνυμο και πατώντας το κουμπί search δεν θα ανοίξει το παράθυρο των αποτελεσμάτων αλλά θα εμφανιστεί το προειδοποιητικό αναδυόμενο παράθυρο παραπέμποντας τον χρήστη στην εισαγωγή του επωνύμου ως προαπαιτούμενη ενέργεια για να προχωρήσει στα επόμενα βήματα.
+                    JOptionPane.showMessageDialog(contentPane, "Please insert the required field for the last name to proceed!", "Warning", JOptionPane.WARNING_MESSAGE);		// Στην περίπτωση που το πεδίο last name είναι κενό εμφανίζεται έναν pop-up προειδοποιητικό παράθυρο στον χρήστη μέσω της κλάσης JOptionPane, προκειμένου ο χρήστης της εφαρμογής να ενημερωθεί για την εισαγωγή του επωνύμου.
+                    return;		// Μέσω της εντολής return διακόπτεται αυτομάτως η εκτέλεση της μεθόδου actionPerformed και δεν θα εκτελεστεί ο παρακάτω κώδικας στην περίπτωση που το πεδίο του επωνύμου είναι κενό ή περιέχει whitespaces/tabs, διότι με αυτόν τον τρόπο διασφαλίζεται ότι δεν θα πραγματοποιηθεί σύνδεση με την βάση δεδομένων(που ακολουθεί παρακάτω στον κώδικα) χωρίς να έχει πραγματοποιηθεί νωρίτερα η εισαγωγή χαρακτήρων στο πεδίο που αφορά το επώνυμο.
                 }
                 
-             
-                String lnamecorrect = last.substring(0, 1).toUpperCase() + last.substring(1).toLowerCase();		
-                if (!last.equals(lnamecorrect)) {		 
-                    text_LName.setText(lnamecorrect);	 
-                    last = lnamecorrect;  				
-                    JOptionPane.showMessageDialog(contentPane, "The last name was automatically corrected to: " + lnamecorrect, "Correction", JOptionPane.INFORMATION_MESSAGE);		 
+             // Διαδικασία μετατροπής του πρώτου γράμματος μόνο σε κεφαλαίο και διατήρηση των υπόλοιπων γραμμάτων σε μικρά σε περίπτωση που ο χρήστης της εφαρμογής εισάγει μία διαφορετική μορφοποίηση ως προς το επώνυμο συγριτικά με το πώς έχει καταχωρηθεί το επώνυμο στην βάση δεδομένων.
+                String lnamecorrect = last.substring(0, 1).toUpperCase() + last.substring(1).toLowerCase();		// Σε αυτό το σημείο εντός της μεταβλητής lnamecorrect, η οποία είναι αντίστοιχου τύπου δηλαδή τύπου String, αποθηκεύεται και δημιουργείται ένα νέο String, το οποίο θα περιέχει το δοσμένο αλφαριθμητικό σύμφωνα με το πώς είναι δηλαδή περασμένο στην βάση δεδομένων όπου το πρώτο γράμμα του επωνύμου είναι κεφαλαίο και τα υπόλοιπα γράμματα είναι πεζά. Το substring(=υποαλφαριθμητικό) είναι ένα αλφαριθμητικό που βρίσκεται μέσα σε ένα άλλο αλφαριθμητικό μεγαλύτερο ή ίσο από αυτό, καθώς μέσω της μεθόδου last.substring(0, 1), η οποία εφαρμόζεται πάνω στην μεταβλητή last που έχει εκχωρημένο το περιεχόμενο text_LName που αφορά το πεδίο κειμένου που εισήγαγε ο χρήστης για το επώνυμο, εξάγεται ένα υποαλφαριθμητικό με ακέραιο όρισμα "αρχή" το 0 που αντιπροσωπεύει τον δείκτη για τον πρώτο χαρακτήρα του αλφαριθμητικού από όπου θα ξεκινήσει η εξαγωγή του υποαλφαριθμητικού (εξ ου που ο δείκτης έχει κα την τιμή 0, αφού θέλουμε να ξεκινάει από την αρχή του αλφαριθμητικού που αφορά τον πρώτο χαρακτήρα του επωνύμου που έχει εισαχθεί) μετατρέποντας αυτόν τον πρώτο χαρακτήρα σε κεφαλαίο γράμμα μέσω της μεθόδου .toUpperCase() ενώ το ακέραιο όρισμα "τέλος" που προσδιορίζει την θέση τέλους του υποαλφαριθμητικού, η οποία είναι κατά ένα μικρότερη με αποτέλεσμα να μην συμπεριλαμβάνεται στο υποαλφαριθμητικό αφού αντιστοιχεί στην θέση "τέλος" του αλφαριθμητικού. Αυτό λοιπόν(η μετατροπή του πρώτου γράμματος σε κεφαλαίο) μέσω χρήσης του συμβόλου + συνενώνεται με την χρήση της μεθόδου last.substring(1).toLowerCase(), όπου η αρχή του αλφαριθμητικού ξεκινάει από τον δείκτη 1 του αλφαριθμητικού (όπως ακριβώς ορίζεται), που αντιστοιχεί στην δεύτερη θέση του αλφαριθμητικού(δηλαδή μετά τον πρώτο χαρακτήρα) συμπεριλαμβάνοντας κι όλους τους υπόλοιπους χαρακτήρες μέχρι το τέλος του αλφαριθμητικού αφού μέσω χρήσης της μεθόδου .toLowerCase μετατρέπονται οι υπόλοιποι χαρακτήρες του αλφαριθμητικού σε μικρά/πεζά γράμματα.
+                if (!last.equals(lnamecorrect)) {		// Μέσω αυτού του ελέγχου if, ελέγχεται εάν ο χρήστης έχει εισάγει το επώνυμο στην σωστή μορφή ή εάν απαιτείται διόρθωση στην τιμή του πεδίου που αφορά το επώνυμο. Μέσω χρήσης της μεθόδου last.equals(lnamecorrect), που ορίζεται μέσα στην συνθήκη της if πραγματοποιείται σύγκριση του αρχικού αλφαριθμητικού(string) που έχει εκχωρηθεί μέσα στην μεταβλητή last(είτε μπορεί να είναι όλα τα γράμματα κεφαλαία είτε μπορεί να είναι όλα τα γράμματα μικρά/πεζά) με το διορθωμένο αλφαριθμητικό που είναι εκχωρημένο μέσα στην μεταβλητή lnamecorrect(αντιπροσωπεύοντας το πρώτο γράμμα κεφαλαίο κα τα υπόλοιπα γράμματα σε πεζά) ενώ ταυτόχρονα μέσω χρήσης του (!) που ορίζεται στην συνθήκη και που μπαίνει μπροστά από την σύγκριση των δύο αλφαριθμητικών πραγματοποιείται αντιστροφή του αποτελέσματος που σημαίνει ότι εάν τα 2 αλφαριθμητικά(strings) δεν είναι equals(=ίσα), δηλαδή διαφέρουν ως προς την μορφοποίηση του πώς είναι γραμμένα στην πρώτη και στην δεύτερη μεταβλητή, τότε εκτελείται το σώμα της if.  
+                    text_LName.setText(lnamecorrect);	// Μέσω της μεθόδου setText και με παράμετρο εισόδου το lnamecorrect(που περιέχει το διορθωμένο αλφαριθμητικό με το πρώτο γράμμα του επωνύμου κεφαλαίο και τα υπόλοιπα γράμματα πεζά) αντικαθίσταται το περιεχόμενο του text_LName(το οποίο περιέχει το εσφαλμένο αλφαριθμητικό-όλα τα γράμματα μικρά ή όλα τα γράμματα κεφαλαία) με το διορθωμένο αλφαριθμητικό που είναι εκχωρημένο μέσα στην μεταβλητή lnamecorrect με αποτέλεσμα ο χρήστης της εφαρμογής να έχει την δυνατότητα να δει αμέσως την διόρθωση που πραγματοποιήθηκε. 
+                    last = lnamecorrect;  				// Εκχώρηση του διορθωμένου αλφαριθμητικού(ο πρώτος χαρακτήρας κεφαλαίος και τα υπόλοιπα γράμματα πεζά) που υπάρχει μέσα στην μεταβλητή (lnamecorrect) μέσω ενημέρωσης της τοπικής μεταβλητής last με αποτέλεσμα η μεταβλητή last να αντιπροσωπεύει την σωστή τιμή για το επώνυμο ενώ συναφείς λειτουργίες που βασίζονται στην μεταβλητή last θα βασίζονται και θα λαμβάνουν από αυτή την μεταβλητή την ενημερωμένη και διορθωμένη μορφή του επωνύμου.
+                    JOptionPane.showMessageDialog(contentPane, "The last name was automatically corrected to: " + lnamecorrect, "Correction", JOptionPane.INFORMATION_MESSAGE);		// Εν τέλει εμφανίζεται πάνω στο κεντρικό παράθυρο(contentPane) ένα αναδυόμενο παράθυρο διαλόγου(pop-up) στον χρήστη ενημερώνοντας τον για την διορθωμένη τιμή όπου το καταχωρημένο επώνυμο που εισήγαγε διορθώθηκε αυτόματα με την σωστή τιμή που έχει καθοριστεί για το επώνυμο σύμφωνα και με την βάση δεδομένων(όπου ο πρώτος χαρακτήρας αναπαρίσταται με κεφαλαίο γράμμα και οι υπόλοιποι χαρακτήρες με μικρά γράμματα).  
                 }
                 
-                try {		
-                	Connection myconn = Application.conn;	  
-                    String query = "SELECT * FROM teachers WHERE lastname LIKE ?";		
-                    PreparedStatement ps = myconn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);		
-                    ps.setString(1, text_LName.getText() + "%");		
-                    ResultSet rs = ps.executeQuery();		 
-                    if (rs.next()) {						
+                try {		// Εντός του try block εμπεριέχεται ο επικύνδυνος κώδικας για την αντιμετώπιση κάποιων πιθανών εξαιρέσεων που ίσως προκύψουν και πιο συγκεκριμένα τύπου SQLException που αφορά την σύνδεση με την βάση δεδομένων καθώς και εντολές εκτέλεσης ερωτημάτων SQL.
+                	Connection myconn = Application.conn;	  // Σε αυτό το σημείο μπορούμε να δούμε το αντικείμενο της σύνδεσης, όπου πατώντας ο χρήστης το κουμπί search κι αφού θα έχει πληκτρολογήσει τα πρώτα γράμματα του επωνύμου θα τού εμφανίζεται το παράθυρο των αποτελεσμάτων που θα έχουν ανασυρθεί/ανακληθεί τα αποτελέσματα(με το επώνυμο που ταιριάζει στην αναζήτηση) από την βάση δεδομένων. Στην ουσία καλώ το καθολικό πεδίο conn να εκτελεστεί(το οποίο ανήκει στην κλάση Application) και εκχωρώ το αντικείμενο που βρίσκεται μέσα στο πεδίο αποθηκευμένο της κλάσης Application σε μία τοπική μεταβλητή myconn αντίστοιχου τύπου Connection. Αυτή η τοπική μεταβλητή myconn που είναι τύπου Connection θα χρησιμεύσει για την αποστολή sql ερωτημάτων στην βάση δεδομένων.
+                    String query = "SELECT * FROM teachers WHERE lastname LIKE ?";		// Με την εντολή SELECT πραγματοποιείται αναζήτηση και ανάκτηση πληροφοριών όπου στην προκειμένη περίπτωση μέσω αυτού του query ανακτώνται όλες οι εγγραφές από τον πίνακα teachers(που έχει διαμορφωθεί στην βάση δεδομένων) όπου η στήλη lastname φιλτράρεται βάσει μίας συγκεκριμένης τιμής (που εδώ αναπαρίσταται με το ?), το οποίο επρόκειτο να αντικατασταθεί από την τιμή που θα δοθεί μέσω του PreparedStatement, όπου κατά την διάρκεια αντικατάστασης των ? με τις δοθείσες τιμές πραγματοποιείται έναρξη αρίθμησης των ? από το 1.
+                    PreparedStatement ps = myconn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);		// Μέσω της διεπαφής Statement αντιπροσωπεύεται μία εντολή SQL καθώς οι κλήσεις για την εκτέλεση των συγκεκριμένων εντολών πραγματοποιούνται με τις μεθόδους της διεπαφής Statement. Η διεπαφή PreparedStatement επεκτείνει την διεπαφή Statement κι εφαρμόζεται πάνω στο αντικέιμενο της σύνδεσης myconn, καθώς μέσω αυτής προετοιμάζεται η SQL εντολή επιστρέφοντας αντικείμενο τύπου PreparedStatement, όπου το αντικείμενο αυτό που επιστρέφεται δύνανται να χρησιμοποιηθεί στην αποτελεσματική εκτέλεση ενός SQL Statement πολλές φορές ενώ ταυτόχρονα οι μέθοδοι getters και setters θα πρέπει να είναι του αντίστοιχου τύπου ανάλογα με το τί συγκεκριμένα έχει τεθεί ως παράμετρος στην συγκεκριμένη μέθοδο(με παράμετρο την μεταβλητή query που είναι τύπος δεδομένου String) άρα έχουμε αντίστοιχα παρακάτω χρήση των μεθόδων getText και setString. Η παράμετρος της συγκεκριμένης μεθόδου(TYPE_SCROLL_INSENSITIVE-η οποία είναι μία σταθερά τύπου int και ανοίκει στην διεπαφή ResultSet. Η διεπαφή ResultSet αναπαριστά τα αποτελέσματα από την βάση δεδομένων με την μορφή ενός πίνακα δεδομένων κατά την εκτέλεση μίας δήλωσης που υποβάλει ερωτήματα στην βάση δεδομένων. Το αντικείμενο ResultSet περιέχει έναν δείκτη/δρομέα/cursor που υποδεικνύει την τρέχουσα γραμμή των δεδομένων στην οποία βρίσκεται ενώ τοποθετείται πριν από την πρώτη σειρά καθώς η μέθοδος next() μετακινεί τον δείκτη στην επόμενη σειρά αλλά θα επιστρέψει false στην περίπτωση που δεν υπάρχουν άλλες σειρές στο αντικείμενο ResultSet) καθιστά εφικτή την δυνατότητα μετάβασης μπρος-πίσω στα αποτελέσματα/στις διάφορες εγγραφές μέσω των κουμπιών πλοήγησης από την φόρμα των αποτελεσμάτων χωρίς την δυνατότητα υπάρξης κάποιας αλλαγής ή τροποποίησης στα δεδομένα. Η σταθερά CONCUR_UPDATABLE καθιστά δυνατή την δυνατότητα επεξεργασίας/ενημέρωσης δεδομένων ενός αντικειμένου ResultSet, εξασφαλίζοντας ότι το επιστρεφόμενο ResultSet θα είναι updatable. Όλες αυτές οι ενέργειες είναι σημαντικές εξασφαλίζοντας την δυνατότητα μετακίνησης του δείκτη ResultSet μέσω των μεθόδων first, next, previous, last καθώς και ενημέρωσης των δεδομένων/εγγραφών.
+                    ps.setString(1, text_LName.getText() + "%");		// Σε αυτό το σημείο μέσω της μεθόδου setString τίθεται η τιμή, η οποία θα αντικαταστήσει το ? από το SQL ερώτημα που τέθηκε παραπάνω στον κώδικα, χρησιμοποιώντας την τιμή που έχει εισαχθεί από τον χρήστη εντός του πεδίου last name κι έχει εκχωρηθεί μέσα στην μεταβλητή text_LName λαμβάνοντας υπόψιν και το σύμβολο % μέσω του οποίου φιλτράρόνται όλα τα επώνυμα που ξεκινούν σύμφωνα με το δοσμένο κείμενο του χρήστη.
+                    ResultSet rs = ps.executeQuery();		// Ένα αντικείμενο τύπου ResultSet μοιάζει με έναν πίνακα όπου οι στήλες καθορίζονται από το SELECT query(εκτελώντας το συγκεκριμένο SELECT query κι επιστρέφοντας ένα αντικείμενο ResultSet) και η κάθε γραμμή είναι μία εγγραφή που αναπαριστά ένα αποτέλεσμα από το query. Ο πίνακας έχει επιπλέον έναν δείκτη (cursor), που δείχνει στην τρέχουσα εγγραφή. Αφού δημιουργηθεί το αντικείμενο Statement πραγματοποιείται εκτέλεση της μεθόδου executeQuery(), μέσω της οποίας μεταβιβάζεται στο αντικείμενο ένα αλφαριθμητικό με το κείμενο της ερώτησης SQL. Εκτέλεση του SELECT και επιστροφή εγγραφών καθώς εκχωρείται μέσα σε μία μεταβλητή rs(η οποία μεταβλητή αναπαριστά τα αποτελέσματα και είναι τύπου ResultSet), καθώς μέσω της διεπαφής ResultSet αντιπροσωπεύονται τα αποτελέσματα που λαμβάνονται από την εκτέλεση των SQL εντολών ενώ μέσω των μεθόδων αυτής της διεπαφής καθίσταται αποτελεσματική η διαχείριση των δεδομένων. Τα αποτελέσματα προκύπτουν με την μορφή ενός αντικειμένου που υλοποιεί την διεπαφή ResultSet, καθώς μέσω αυτού του αντικειμένου είναι εφικτή η λήψη τιμών των πεδίων με βάση το όνομα ή την θέση του πεδίου, πληροφορίες για τον αριθμό των επιστρεφόμενων στηλών καθώς και για τους τύπους δεδομένων. 
+                    if (rs.next()) {						// Πραγματοποιείται έλεγχος στην περίπτωση που υπάρχουν εγγραφές ή εάν το ResultSet είναι κενό καθώς καλείται η μέθοδος rs.next μέσω της οποίας μετακινείται ο δείκτης στην πρώτη εγγραφή επιστρέφοντας την τιμή true εάν υπάρχει εγγραφή που να ταιριάζει με το επώνυμο(κριτήριο) που έχει βάλει ο χρήστης. Έτσι η πρώτη φορά που θα κληθεί η μέθοδος next κάνει την πρώτη σειρά τρέχουσα ενώ η δεύτερη φορά που θα κληθεί η μέθοδος next μετατρέπει την δεύτερη σειρά σε τρέχουσα σειρά. Στην περίπτωση επιστροφής false ο δείκτης θα τοποθετηθεί μετά την τελευταία σειρά.
                     	int teacher_id = rs.getInt("id");
-                    	String teacher_firstname = rs.getString("firstname");	
+                    	String teacher_firstname = rs.getString("firstname");	// Μέσω της μεθόδου getString πραγματοποιείται η ανάγνωση των δεδομένων από την τρέχουσα εγγραφή(στην οποία τρέχουσα εγγραφή βρίσκεται ο δείκτης-cursor), βάζοντας ως όρισμα ένα αλφαριθμητικό, το οποίο αντιπροσωπεύει το όνομα της στήλης του δεδομένου έτσι όπως έχει οριστεί από την βάση δεδομένων.
                     	String teacher_lastname = rs.getString("lastname");
                     	
-                    	Main_Application.results.displayTeacher(teacher_id, teacher_firstname, teacher_lastname);		
-                    	Main_Application.results.setResultSet(rs);			
-                        Main_Application.results.Records();					
+                    	Main_Application.results.displayTeacher(teacher_id, teacher_firstname, teacher_lastname);		// Μέσω του αντικειμένου results(που φτιάξαμε στην κεντρική κλάση από την οποία τρέχει όλη η εφαρμογή) που ανήκει στην κλάση Results μπορούμε να καλέσουμε την μέθοδο (που φτιάξαμε στην κλάση Results που επεκτείνει την JFrame), βάζοντας ως παραμέτρους στην μέθοδο τα δεδομένα του καθηγητή που ανακτήθηκαν από το ResultSet με απώτερο σκοπό την εμφάνιση των συγκεκριμένων πληροφοριών της πρώτης εγγραφής στο περιβάλλον διεπαφής που αφορά το παράθυρο των αποτελεσμάτων.
+                    	Main_Application.results.setResultSet(rs);			// Καλείται η συγκεκριμένη μέθοδος μέσω του αντικειμένου results (που δημιουργήθηκε στην κύρια κλάση έναρξης όλου του προγράμματος και ανήκει στην κλάση Results), όπου προετοιμάζονται τα αποτελέσματα της αναζήτησης που θα φαίνονται στο παράθυρο των αποτελεσμάτων καθώς μέσω αυτής της μεθόδου λαμβάνεται το ResultSet που προέκυψε από την εκτέλεση του SQL query στο παράθυρο της αναζήτησης και το αναθέτει στο πεδίο της κλάσης των αποτελεσμάτων που είναι η κλάση Results και αφορά το πεδίο rsData. Αυτό έχει ως αποτέλεσμα το παράθυρο των αποτελεσμάτων να χρησιμοποιεί τα δεδομένα αυτά κατά την πλοήγηση του χρήστη στην εφαρμογή πατώντας τα κουμπιά πλοήγησης (first, next, previous, last).
+                        Main_Application.results.Records();					// Καλείται η μέθοδος Records, η οποία διαβάζει την τρέχουσα εγγραφή από το ResultSet που έχει ανατεθεί μέσω της μεθόδου setResultSet(rs) ενημερώνοντας τα TextFields μέσω της μεθόδου displayTeacher με απώτερο σκοπό την εμφάνιση των δεδομένων του καθηγητή στην οθόνη. Μέσω κλήσης της μεθόδου Records() εξασφαλίζεται ότι όταν εμφανίζεται το παράθυρο αποτελεσμάτων, τα δεδομένα του τρέχοντος record (που προκύπτουν απευθείας από το query ή μετά από κάποια πλοήγηση) προβάλλονται σωστά στο περιβάλλον διεπαφής του χρήστη.
                     	
-                        Main_Application.results.setVisible(true);			
-                        Main_Application.insert.setEnabled(false);			
+                        Main_Application.results.setVisible(true);			// Το παράθυρο των αποτελεσμάτων είναι ορατό/φαίνεται στην οθόνη μόλις ο χρήστης πατήσει το κουμπί search.
+                        Main_Application.insert.setEnabled(false);			// Όταν ο χρήστης πατάει το κουμπί (Search) απενεργοποιείται το τρέχον παράθυρο(της αναζήτησης/εγγραφής) και γίνεται ορατό το επόμενο παράθυρο(που το πάτημα του συγκεκριμένου κουμπιού ανοίγει την φόρμα των αποτελεσμάτων).
                     
-                        Main_Application.results.addWindowListener(new WindowAdapter() {	
+                        Main_Application.results.addWindowListener(new WindowAdapter() {	// Προσθήκη Windowlistener στο results για καθαρισμό του πεδίου επωνύμου όταν το παράθυρο κλείσει.
                             @Override
                             public void windowClosing(WindowEvent e) {
-                                clearForm();  				
+                                clearForm();  				// Κι εδώ καλείται η μέθοδος clearForm(), η οποία καθαρίζει το text_LName(το πεδίο που αφορά την εισαγωγή επωνύμου από προηγούμενη αναζήτηση) όταν το παράθυρο των αποτελεσμάτων κλείσει(δηλαδή όταν ο χρήστης πατήσει Χ από το παράθυρο των αποτελεσμάτων κι επιστρέψει στο παράθυρο της αναζήτησης με το πεδίο Last name να είναι εκκαθαρισμένο-να μην περιέχει δηλαδή ότι χαρακτήρες εισήγαγε ο χρήστης από προηγούμενη αναζήτηση).
                             }
                         });
-                    } else {			
-                    	JOptionPane.showMessageDialog(Main_Application.insert, "Teacher with the specific lastname was not found", "Wrong input", JOptionPane.WARNING_MESSAGE);		
+                    } else {			// Το σώμα της else θα εκτελεστεί όταν το rs.next() που κλήθηκε νωρίτερα επέστρεψε ως αποτέλεσμα την τιμή false (που σημαίνει ότι δεν βρέθηκε καμία εγγραφή που να ικανοποιεί το κριτήριο που έθεσε ο χρήστης της εφαρμογής αναφορικά με το επώνυμο).
+                    	JOptionPane.showMessageDialog(Main_Application.insert, "Teacher with the specific lastname was not found", "Wrong input", JOptionPane.WARNING_MESSAGE);		// Ενημέρωση του χρήστη ότι δεν υπάρχει καταχώρηση με το συγκεκριμένο επώνυμο.
                     }
                 } catch (SQLException ex) {
                 	JOptionPane.showMessageDialog(contentPane, "Connection to Database failed.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -156,47 +158,47 @@ public class Window_Search_Insert extends JFrame {
             }
         });
         
-        pnlCenter.add(btnSearch, gbcSearchButton);			
+        pnlCenter.add(btnSearch, gbcSearchButton);			// Προσθέτει το κουμπί στο κεντρικό panel(pnlCenter) με τις καθορισμένες ρυθμίσεις που διατυπώθηκαν παραπάνω.
 
-        
+        // Κουμπί "New Register"
         GridBagConstraints gbcRegister = (GridBagConstraints) baseGbc.clone();			
-        gbcRegister.gridx = 0;			
-        gbcRegister.gridy = 2;			
-        gbcRegister.gridwidth = 2;   	
-        gbcRegister.anchor = GridBagConstraints.CENTER;				
+        gbcRegister.gridx = 0;			// Τοποθέτηση του κουμπιού στην 1η στήλη
+        gbcRegister.gridy = 2;			// Τοποθέτηση του κουμπιού στην 3η γραμμή/σειρά
+        gbcRegister.gridwidth = 2;   	// Το κουμπί register καταλαμβάνει 2 στήλες για κεντραρισμένη τοποθέτηση
+        gbcRegister.anchor = GridBagConstraints.CENTER;				// Κεντράρει το κουμπί στο διαθέσιμο κελί.
         JButton btnRegister = new JButton("New Register");
         btnRegister.setFont(new Font("Tahoma", Font.BOLD, 20));
         btnRegister.setForeground(new Color(128, 0, 0));
         btnRegister.setBackground(new Color(255, 160, 122));
-        btnRegister.addActionListener(new ActionListener() {		
+        btnRegister.addActionListener(new ActionListener() {		// Προσθήκη ActionListener στο κουμπί register, έτσι ώστε να εκτελείται ο κώδικας του σώματος της μεθόδου, όταν πατηθεί το κουμπί
             public void actionPerformed(ActionEvent e) {
-                Main_Application.register.setVisible(true);			
-                Main_Application.insert.setEnabled(false);			
+                Main_Application.register.setVisible(true);			// Γίνεται ορατό το παράθυρο για καταχώρηση νέας εγγραφής(New_Register) όταν πατηθεί το κουμπί register.
+                Main_Application.insert.setEnabled(false);			// Απενεργοποιείται το τρέχον παράθυρο(δηλαδή η φόρμα αναζήτησης/εισαγωγής) όταν πατηθεί το κουμπί register και γίνεται ορατό το παράθυρο(New_Register) για καταχώρηση νέας εγγραφής.
             }
         });
-        pnlCenter.add(btnRegister, gbcRegister);		
+        pnlCenter.add(btnRegister, gbcRegister);		// Προσθήκη του κουμπιού στο κεντρικό πάνελ(pnlCenter).
 
-        
+        // Εικόνα (εικονίδιο) δίπλα στο κουμπί
         GridBagConstraints gbcIcon = (GridBagConstraints) baseGbc.clone();
-        gbcIcon.gridx = 2;		
-        gbcIcon.gridy = 2;		
-        gbcIcon.anchor = GridBagConstraints.CENTER;			
-        JLabel lblPhoto = new JLabel();			
-        lblPhoto.setIcon(new ImageIcon(Window_Search_Insert.class.getResource("/exetastiki_earino/Educ_image/teacher.png")));		
-        pnlCenter.add(lblPhoto, gbcIcon);		
+        gbcIcon.gridx = 2;		// Τοποθέτηση της εικόνας στην 3η στήλη
+        gbcIcon.gridy = 2;		// Τοποθέτηση της εικόνας στην 3η σειρά(γραμμή)
+        gbcIcon.anchor = GridBagConstraints.CENTER;			// Κεντράρισμα εικόνας σύμφωνα με το κελί που ορίστηκε
+        JLabel lblPhoto = new JLabel();			// Δημιουργώ την ετικέτα για να τοποθετήσω με αυτόν τον τρόπο την εικόνα πάνω στην ετικέτα.
+        lblPhoto.setIcon(new ImageIcon(Window_Search_Insert.class.getResource("/exetastiki_earino/Educ_image/teacher.png")));		// Εδώ φορτώνεται η εικόνα σύμφωνα με το resource path.
+        pnlCenter.add(lblPhoto, gbcIcon);		// Προσθήκη της εικόνας στο pnlCenter.
 
         GridBagConstraints gbcBottom = (GridBagConstraints) baseGbc.clone();
-        gbcBottom.gridx = 0;		
-        gbcBottom.gridy = 3;		
-        gbcBottom.gridwidth = 3;	
-        gbcBottom.weighty = 1.0;		
-        gbcBottom.fill = GridBagConstraints.VERTICAL;		
-        pnlCenter.add(Box.createVerticalGlue(), gbcBottom);		
+        gbcBottom.gridx = 0;		// Τοποθετεί το filler στην πρώτη στήλη.
+        gbcBottom.gridy = 3;		// Τοποθετεί το filler στην τέταρτη σειρά/γραμμή.
+        gbcBottom.gridwidth = 3;	// Καλύπτει 3 στήλες
+        gbcBottom.weighty = 1.0;		// Δέχεται επιπλέον κάθετο χώρο, διατηρώντας τις υπόλοιπες εγγραφές κεντραρισμένες.
+        gbcBottom.fill = GridBagConstraints.VERTICAL;		//  Το filler επεκτείνεται κατακόρυφα για να απορροφήσει το επιπλέον κάθετο χώρο.
+        pnlCenter.add(Box.createVerticalGlue(), gbcBottom);		// Προσθέτει ένα αόρατο στοιχείο που εξασφαλίζει πως οι ομάδες στοιχείων (clusters) παραμένουν στο κέντρο του panel ακόμα και όταν το παράθυρο αλλάζει μέγεθος.
         
-    }		
+    }		// Εδώ κλείνει ο κατασκευαστής Window_Search_Insert.
     
  
-    public void clearForm() {				
-        text_LName.setText("");  			
+    public void clearForm() {				// Δημιουργία μεθόδου για εκκαθάριση του πεδίου επωνύμου από την προηγούμενη αναζήτηση.
+        text_LName.setText("");  			// Θέτω ως παράμετρο εισόδου της μεθόδου setText ένα κενό αλφαριθμητικό το οποίο καθαρίζει το πεδίο του επωνύμου.
     }
-}
+}		// Εδώ κλείνει η κλάση.
