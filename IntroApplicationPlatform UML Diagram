@@ -1,0 +1,7 @@
+IntroApplicationPlatform
+- contentPane : JPanel
+- txtUsername : JTextField
+- txtPassword : JPasswordField
+
++ main(String[])
++ run() 
