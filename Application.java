@@ -3,27 +3,27 @@ package exetastiki_earino;
 import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;		
-import javax.swing.BoxLayout;		
+import javax.swing.ImageIcon;		// Σε αυτό το σημείο γίνεται import η κλάση ImageIcon από το πακέτο javax.swing, η οποία επεκτείνει την κλάση java.lang.Object(όπου η διεπαφή Icon σχηματίζει εικονίδια από εικόνες που δημιουργούνται από μια διεύθυνση URL, το όνομα αρχείου-μέσα από δημιουργία φακέλου εδώ στο eclipse-ή από μία συστοιχία byte προφορτώνονται χρησιμοποιώντας το MediaTracker για να παρακολουθεί τη φορτωμένη κατάσταση της εικόνας), με σκοπό την εφαρμογή των εικόνων πάνω σε swing components(JLabels, JButtons).
+import javax.swing.BoxLayout;		// Γίνεται import η κλάση BoxLayout από το πακέτο javax.swing, η οποία επεκτείνει την κλάση java.lang.Object καθώς υλοποιείται η διεπαφή (LayoutManager-που καθορίζει την διάταξη των γραφικών στοιχέιων στο παράθυρο). Ο BoxLayoutManager τακτοποιεί τα συστατικά στον οριζόντιο άξονα από τα αριστερά προς τα δεξιά ή κατακόρυφα από επάνω προς τα κάτω ενώ όπως έχει αναφερθεί και νωρίτερα παρέχεται ένας υποδοχέας(η κλάση Box), η οποία χρησιμοποιεί τον συγκεκριμένο διαχειριστή καθώς κατά την οριζόντια ή κατακόρυφη τοποθέτηση των αντικειμένων δεν υφίσταται καμία αναδίπλωση με την χρήση του συγκεκριμένου διαχειριστή διάταξης. Ο BoxLayoutManager έχει ως κατασκευαστή: BoxLayout(Container container, int axis), όπου το όρισμα axis αντιπροσωπεύει τον κύριο άξονα αφού μπορεί να είναι είτε BoxLayout.X_AXIS(οριζόντια τοποθέτηση των συστατικών) είτε μπορεί να είναι BoxLayout.Y_AXIS(κατακόρυφη τοποθέτηση των συστατικών).
 
 import java.awt.*;
-import java.awt.Component;			  
-import java.awt.Dimension;			
+import java.awt.Component;			// Γίνεται import η αφηρημένη κλάση(abstract class Component) από το πακέτο java.awt(για να χρησιμοποιήσουμε το Rigid area και το Vertical Glue), η οποία επεκτείνει την κλάση (java.lang.Object), καθώς πρόκειται για ένα συστατικό το οποίο είναι ένα αντικείμενο που αναπαρίσταται στην όθόνη και που μπορεί να αλληλεπιδράσει με τον χρήστη.  
+import java.awt.Dimension;			// Γίνεται import η public class Dimension, η οποία επεκτείνει την κλάση Dimension2D και υλοποιεί την διεπαφή Serializable, καθώς χρησιμοποιείται για τον καθορισμό της διάστασης μεγέθους ενός component με πεδία το (width και height) για τον προσδιορισμό ακέραιας ακρίβειας ενός αντικειμένου.
 import java.awt.event.*;
 
-
-// import java.sql.Connection;			
-// import java.sql.DriverManager;		
-// import java.sql.SQLException;		
-import java.sql.*;				
+// Το JDBC(Java Database Connection) είναι το API της Java για ανάπτυξη εφαρμογών βάσεων δεδομένων επιτρέποντας την δυνατότητα επικοινωνίας με σχεσιακές βάσεις δεδομένων, την εκτέλεση εντολών SQL και τα αποτελέσματα που θα προκύψουν σπό την εκτέλεση εντολών στην βάση δεδομένων. Το αρχικό βήμα είναι η δημιουργία σύνδεσης μεταξύ της εφαρμογής της Java και της βάσης δεδομένων ενώ ταυτόχρονα εντός της εφαρμογής περιλαμβάνεται ένας JDBC κώδικας για την επίτευξη επικοινωνίας με την κλάση οδηγό JDBC driver αποκτώντας πλήρη δυνατότητα χειρισμού της βάσης δεδομένων(δημιουργία πίνακα, τροποποίηση πεδίων πίνακα, αποθήκευση δεδομένων και δημιουργία ερωτημάτων).
+// import java.sql.Connection;			// Εδώ κάνω import από το πακέτο java.sql την διεπαφή Connection για την σύνδεση της εφαρμογής με το sql server, καθώς η διεπαφή(Interface) Connection της JDBC(Java Database Connectivity), όπου μέσω του Connection παρέχεται η δυνατότητα εκτέλεσης ερωτημάτων κι ενημερώσεων στην βάση δεδομένων. Πιο συγκεκριμένα η διεπαφή Connection αντιπροσωπεύει μία σύνδεση με μία συγκεκριμένη βάση δεδομένων όπου η επικοινωνία αυτή επιτυγχάνεται μέσω μεθόδων της Connection κι αφού πρώτα έχει δημιουργηθεί ένα αντικείμενο Connection.
+// import java.sql.DriverManager;		// Εδώ κάνω import από το πακέτο java.sql την κλάση DriverManager, η οποία επεκτείνει την κλάση Object ενώ φορτώνει τους κατάλληλους οδηγούς JDBC δημιουργώντας σύνδεση με την Βάση Δεδομένων προς επικοινωνία. Επίσης η κλάση DriverManager χρησιμοποιείται προκειμένου να δώσει πληροφορίες για τους οδηγούς που είναι φορτωμένοι και βρίσκονται σε χρήση, παρέχει στατικές μεθόδους για την δημιουργία αντικειμένων που εφαρμόζουν την διεπαφή Connection κι αυτό θα πραγματοποιηθεί στην περίπτωση επίτευξης εκ νέου σύνδεσης σε έναν JDBC Driver όπου ζητείται από τον DriverManager η δημιουργία ενός νέου αντικειμένου.
+// import java.sql.SQLException;		// Εδώ κάνω import από το πακέτο java.sql την κλάση SQLException, προκειμένου να αναγνωριστεί ως τύπος από τον compiler καθώς παρέχει πληροφορίες για το σφάλμα σύνδεσης ή την αδυναμία επικοινωνίας με την βάση δεδομένων ή άλλα παρόμοια σφάλματα παρέχοντας πληροφορίες σχετικά με το σφάλμα διευκολύνοντας το debugging για τον προγραμματιστή. Το SQLException είναι υποκλάση(subclass) της κλάσης Exception.
+import java.sql.*;				// Κάνοντας import το πακέτο java.sql με τον αστερίσκο εισάγονται όλες οι από πάνω κλάσεις αυτού του πακέτου που τις χρειαζόμαστε.
 
 public class Application extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	public static Connection conn;		
+	public static Connection conn;		// Δημιουργία πεδίου public(δημόσιας προσπέλασης-ορατό και από τις υπόλοιπες κλάσεις του ίδιου πακέτου) τύπου static Connection που προορίζεται για την σύνδεση στον SQL Server. Την συγκεκριμένη μεταβλητή την δηλώνω ως πεδίο εκτός του try block(γιατί μόλις θα τελείωνε η εκτέλεση του try-block η τοπική αυτή μεταβλητή θα χανόταν και δεν θα υπήρχε τρόπος να αναφερθώ σε αυτήν την μεταβλητή στις άλλες κλάσεις/στα άλλα παράθυρα) για να μπορέσω να την χρησιμοποιήσω και στις άλλες κλάσεις το αντικείμενο(περιέχει τις πληροφορίες για την σύνδεση) που θα δημιουργηθεί και για να είναι εφικτή η αποστολή sql ερωτημάτων από το παράθυρο αναζήτησης εγγραφής, από το παράθυρο νέας εγγραφής και από το παράθυρο των αποτελεσμάτων με τις ήδη υπάρχουσες εγγραφές. Έτσι για να μπορέσουν να σταλθούν τα ερωτήματα χρειαζόμαστε το αντικείμενο της σύνδεσης.
 
-	 
+	 // Εκτέλεση παραθύρου από την μέθοδο main.
 	// public static void main(String[] args) {
 	//	EventQueue.invokeLater(new Runnable() {
 		//	public void run() {
@@ -37,45 +37,45 @@ public class Application extends JFrame {
 		// });
 	// }
 
-	 
-	public Application() {									
-		addWindowListener(new WindowAdapter() {			
-			@Override			
-			public void windowClosing(WindowEvent e) {		  
-				Main_Application.introapp.setEnabled(true);	  
-			}		
+	 // Δημιουργία παραθύρου.
+	public Application() {									// Εντός του σώματος του κατασκευαστή πραγματοποιείται η γραφική διαμόρφωση του παραθύρου.
+		addWindowListener(new WindowAdapter() {			// Γενικώς η διεπαφή WindowListener ορίζει μεθόδους για το πότε το παράθυρο θα πρέπει να ανοίγει, να κλείνει, να ενεργοποιείται ή να απενεργοποιείται, καθώς μέσω της μεθόδου addWindowListener εγγράφεται(καταχωρείται) ο συγκεκριμένος ακροατής(WindowListener), προκειμένου να λαμβάνει τα συμβάντα παραθύρων(WindowEvents) που προκύπτουν από αυτό το παράθυρο. Πιο συγκεκριμένα, το WindowEvent πραγματοποιείται όταν συμβαίνει μετακίνηση, μεγιστοποίηση, ελαχιστοποίηση ή κλείσιμο του παραθύρου(όταν δηλαδή ο χρήστης πατήσει τα αντίστοιχα κουμπιά μεγιστοποίησης, ελαχιστοποίησης, κλεισίματος του παραθύρου ή θελήσει να μετακινήσει το παράθυρο). Επιπροσθέτως, η παράμετρος εισόδου της μεθόδου αυτής είναι η δημιουργία μίας ανώνυμης εσωτερικής κλάσης(δηλαδή κλάσης προσαρμοστή που είναι η WindowAdapter που αντιστοιχεί στις εξής διεπαφές ακροατών: WindowListener, WindowFocusListener, WindowStateListener), όπου στην προκειμένη περίπτωση υπερκαλύπτεται η μέθοδος windowClosing δίνοντας την δυνατότητα να υλοποιήσουμε μόνο τις μεθόδους που χρειάζεται από την διεπαφή(WindowListenetr).
+			@Override			// Υπερκάλυψη(override) της μεθόδου windowClosing(WindowEvent e) από το interface (WindowListener).
+			public void windowClosing(WindowEvent e) {		  // Η μέθοδος αυτή(windowClosing) εκτελείται όταν ένα παράθυρο είναι στη διαδικασία κλεισίματος(δηλαδή όταν ο χρήστης πατήσει το κουμπί X για να κλείσει το παράθυρο) καθώς μέσω του αντικειμένου windowEvent(μεταφέρονται πληροφορίες όπως το πότε και πώς συνέβη το κλείσιμο του παραθύρου) αφού υπερκαλύπτεται η προεπιλεγμένη υλοποίηση της μεθόδου που προσφέρει ο windowAdapter έχοντας ως αποτέλεσμα την εκτέλεση του επιθυμητού κώδικα που δίνεται στο σώμα αυτής της μεθόδου, η οποία είναι η ενεργοποίηση του προηγούμενου παραθύρου(με την εντολή setEnabled(true) για το πεδίο introapp της κλάσης Main_Application που από εκεί τρέχει όλη η εφαρμογή). Αυτό έχει ως αποτέλεσμα ότι όταν το τρέχον παράθυρο κλείνει, το προηγούμενο παράθυρο ενεργοποιείται ξανά και ο χρήστης μπορεί να αλληλεπιδράσει με το αρχικό πάλι παράθυρο δίνοντας την δυνατότητα να μην κλείσει ολόκληρη η εφαρμογή εξασφαλίζοντας ότι πάντα το προηγούμενο παράθυρο θα είναι προσβάσιμο. 
+				Main_Application.introapp.setEnabled(true);	  // Όταν ο χρήστης πατάει X από αυτό το παράθυρο(δηλαδή το Control Panel), στην ουσία καλώντας το πεδίο introapp της κεντρικής κλάσης από την οποία τρέχει όλη η εφαρμογή(Main_Application) μέσω χρήσης της μεθόδου setEnabled ενεργοποιείται ξανά το προηγούμενο παράθυρο(το πρώτο δηλαδή) καθώς η μέθοδος έχει την τιμή true(που σημαίνει ότι ενεργοποιείται και μπορεί ο χρήστης να αλληλεπιδράσει ξανά με το προηγούμενο παράθυρο).
+			}		// Κλείσιμο μεθόδου windowClosing
 			
 			@Override
-			public void windowOpened(WindowEvent ev) {		
-				
-				String url = "jdbc:mysql://localhost:3306/applicationdb";		
-				String username = "appuser";			
-				String password = "Evangelia!";			
-				try {						
-					conn = DriverManager.getConnection(url, username, password);			
-				} catch(SQLException e) {		
-					JOptionPane.showMessageDialog(contentPane, "Connection to Database failed.", "Error", JOptionPane.ERROR_MESSAGE);		 
-					e.printStackTrace();		
+			public void windowOpened(WindowEvent ev) {		// Εδώ γίνεται Override(υπερκαλύπτεται) η windowOpened μέθοδος από το interface(WindowAdapter) και επιτυγχάνεται η σύνδεση της εφαρμογής με τον SQL Server, έτσι ώστε όταν ανοίγει αυτό το παράθυρο να συνδέεται η εφαρμογή με τον SQL Server. Πιο συγκεκριμένα στο σώμα της μεθόδου πραγματοποιείται η σύνδεση με τον SQL Server λόγω δημιουργίας αντικειμένου τύπου Connection, γίνεται αρχικοποίηση του static πεδίου με το αντικείμενο της σύνδεσης ενώ ταυτόχρονα πραγματοποιείται χειρισμός των εξαιρέσεων(exceptions) που ενδεχομένως να προκύψουν κατά την προσπάθεια σύνδεσης με την βάση δεδομένων.
+				// Database connection
+				String url = "jdbc:mysql://localhost:3306/applicationdb";		// Η σύνδεση στον SQL server επιτυγχάνεται μέσω ανάθεσης της διεύθυνσης σύνδεσης στον SQL Server στην μεταβλητή url που είναι τύπου String. Πιο συγκεκριμένα καθορίζεται ο τύπος(MySQL), το hostname(localhost-ψάξε να βρεις τον server σε αυτόν τον υπολογιστή-είναι η IP του SQL Server), η θύρα(3306-τα αιτήματα να τα στέλνεις σε αυτή την θύρα) και το όνομα της βάσης δεδομένων(ApplicationDB) για την επιτυχή δημιουργία σύνδεσης μέσω JDBC.
+				String username = "appuser";			// Ανάθεση ονόματος χρήστη(διαπιστευτηρίων) για την πρόσβαση στην βάση δεδομένων.
+				String password = "Evangelia!";			// Ανάθεση κωδικού πρόσβασης για πρόσβαση στην βάση δεδομένων, καθώς το πεδίο password και το πεδίο username επιτρέπουν την επιβεβαίωση ταυτότητας του χρήστη κατά την σύνδεση.
+				try {						// Χειρισμός των exceptions που μπορεί να δημιουργηθούν κατά τη προσπάθεια σύνδεσης. Μηχανισμός της δομής try-catch για τον χειρισμό της εξαίρεσης που προκαλείται λόγω SQLException καθώς αυτή η εξαίρεση προκαλείται από την μέθοδο DriverManager.getConnection(url, username, password).
+					conn = DriverManager.getConnection(url, username, password);			//Κατυεθείαν αποθήκευση του αντικειμένου που προκύπτει από την μέθοδο getConnection στο πεδίο conn και όχι μέσω δημιουργίας τοπικής μεταβλητής, γιατί το αντικείμενο που θα προκύπτει θέλω να μπορέσω να το χρησιμοποιήσω και στις άλλες κλάσεις/στα άλλα παράθυρα. Μέσω της μεθόδου getConnection επιτυγχάνεται η σύνδεση στην βάση δεδομένων καθώς επιστρέφεται ένα αντικείμενο τύπου Connection. Το αντικείμενο που θα επιστραφεί από την μέθοδο getConnection(url, username, password) το κάνω εκχώρηση σε μία μεταβλητή conn η οποία είναι του κατάλληλου τύπου, δηλαδή τύπου Connection, καθώς το αντικείμενο αυτό περιέχει πληροφορίες(που είναι ο server, πού ακούει, ποια βάση και μέσω ποιου χρήστη) για την σύνδεση. Ο κατασκευαστής της κλάσης κρατά την διαδρομή προς την βάση δεδομένων μέσω sourceURL, ονόματος χρήστη(user) και συνθηματικού password για την επιτυχή σύνδεση με την βάση δεδομένων. Αρχικοποίηση του static πεδίου με το αντικείμενο της σύνδεσης. Δημιουργεί τη σύνδεση (μεταξύ εφαρμογής και SQL Server) και επιστρέφει αντικείμενο τύπου Connection. Πιο συγκεκριμένα δημιουργείται το conn ως αντικείμενο Connection πραγματοποιώντας την σύνδεση(με ορίσματα url, username, password) με την πηγή των δεδομένων κατασκευάζοντας ένα περιβάλλον δημιουργίας κι εκτέλεσης των SQL εντολών καθώς το αντικείμενο Connection δημιουργείται μέσω της μεθόδου getConnection() της κλάσης DriverManager αφού όταν κληθεί η μέθοδος getConnection o DriverManager θα προσπαθήσει να τοποθετήσει τους κατάλληλους οδηγούς μεταξύ αυτών που φορτώθηκαν κατά την αρχικοποίηση και εκείνων που φορτώθηκαν ξεχωριστά χρησιμοποιώντας τον ίδιο φορτωτή κλάσης με την τρέχουσα εφαρμογή. Η getConnection ενδεχομένως να προκαλέσει SQLException εξ ου κι ο λόγος που χρησιμοποιούμε την δομή try-catch για τον χειρισμό του exception.
+				} catch(SQLException e) {		// Εντός του catch βάζω ως παράμετρο εισόδου το SQLException που ενδεχομένως να προκύψει με όνομα τοπικής μεταβλητής παραμέτρου διαφορετικό από το ev που βάλαμε για το WindowEvent(γιατί απαγορεύεται να έχουμε τοπικές μεταβλητές με το ίδιο όνομα αφού θα χτυπήσει από τον compiler το σφάλμα κι έτσι θα πρόκειται για ένα compile time error-συντακτικό σφάλμα-που δεν θα επιτρέψει την μεταγλώτιση του αρχείου από τον compiler και δεν θα παραχθεί εκτελέσιμο αρχείο) ενώ πιάνονται τυχόν εξαιρέσεις(εσφαλμένη σύνταξη URL, λάθος διαπιστευτήρια, λάθος θύρα, δεν έχει πραγματοποιηθεί η προσθήκη του connector (jdbc) στο build path) που ενδεχομένως να προκύψουν κατά την σύνδεση εξασφαλίζοντας την ομαλή λειτουργία του προγράμματος δίχως τον απότομο τερματισμό του. Εκτός από τον μηχανισμό try-catch για τον χειρισμό της συγκεκριμένης εξαίρεσης θεωρείται απαραίτητο η συμπερίληψη στο όλο project του κατάλληλου connector με σκοπό την σύνδεση (JDBC).
+					JOptionPane.showMessageDialog(contentPane, "Connection to Database failed.", "Error", JOptionPane.ERROR_MESSAGE);		// Ενημέρωση του χρήστη με γραφικό τρόπο ότι απέτυχε η σύνδεση με την βάση δεδομένων. Εμφάνιση pop up(παράθυρο διαλόγου) καλώντας την μέθοδο showMessageDialog(για ενημέρωση του χρήστη), καθώς κεντράρεται το παράθυρο σύμφωνα με το γονικό component που είναι το contentPane). Παράθυρο διαλόγου για πληροφόρηση του χρήστη, καθώς πρόκειτε για ένα error message, δηλαδή σφάλμα σύνδεσης με την βάση δεδομένων εξ ου που και το μήνυμα σφάλματος που θα εμφανιστεί θα είναι: "Connection to Database failed."). Πρόκειτε για ERROR message(που είναι και ο τίτλος του παραθύρου με το συγκεκριμένο εικονίδιο που θα έχει). Troubleshooting για πιθανά σφάλματα(λόγω λάθος ονόματος βάσης δεδομένων, λάθος θύρα ή δεν τρέχει ο sql server, τυπογραφικά λάθη κατά την σύνταξη λόγω λάθους διεύθυνσης IP/localhost ή δεν έχει γίνει προσθήκη του connector-jdbc-στο build path). Επομένως στα ComunicationsException συμπεριλαμβάνονται τα σφάλματα/οι εξαιρέσεις που προκύπτουν από λάθος IP Adress/localhost, λάθος θύρα ή δεν τρέχει ο SQL Server με αποτέλεσμα να εκτυπώνεται στο console το αντίστοιχο μήνυμα για Cominications Link Failure. Μία επιπλέον αποτυχία σύνδεσης με την βάση δεδομένων είναι το σφάλμα/η εξαίρεση που προκύπτει από SQLSyntaxErrorException όπου συμπεριλαμβάνονται τα σφάλματα που προκύπτουν είτε από λάθος στοιχεία χρήστη είτε από λάθος όνομα της βάσης δεδομένων με αποτέλεσμα να προκύπτει το μήνυμα Access Denied(δηλαδή άρνηση πρόσβασης για τον χρήστη). Το 3ο SQLException που ενδεχομένως να προκύψει θα έχει να κάνει είτε με τυπογραφικά λάθη ενδεχομένως κατά την σύνταξη του url είτε με την αδυναμία προσθήκης του JDBC Driver στο build path με αποτέλεσμα να τυπωθεί στο console το μήνυμα No suitable driver found για το JDBC(Java Database Connector) Driver. 
+					e.printStackTrace();		// Εκτύπωση μυνήματος σφάλματος στην κονσόλα για αποσφαλμάτωση (debugging) από τον προγραμματιστή καθώς μόλις πατήσω το κουμπί οκ από το Error Message εμφανίζεται στην κονσόλα σε ποιο σημείο ακριβώς βρίσκεται το σφάλμα, περισσότερες πληροφορίες δηλαδή για το είδος της εξαίρεσης(του Exception) που προκλήθηκε.
 				}
-			}	
-		});		
+			}	// Κλείσιμο μεθόδου windowOpened
+		});		// Κλείσιμο της ανώνυμης κλάσης WindowAdapter και ολοκλήρωση της μεθόδου addWindowListener με αποτέελσμα το EDT(Event Dispatch Thread) να καλεί την μέθοδο windowClosing(όταν γίνεται προσπάθεια κλεισίματος του παραθύρου από τον χρήστη).
 		
 		setTitle("Control Panel");
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);			
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);			// Καλείται η μέθοδος setDefaultCloseOperation της κλάσης JFrame βάζοντας ως παράμετρο εισόδου την σταθερά HIDE_ON_CLOSE, όπου κρύβει αυτό το παράθυρο μόλις ο χρήστης πατήσει κλασικά το κουμπί X(συνεχίζει όμως να τρέχει, δηλαδή το παράθυρο παραμένει στην μνήμη και ενδέχεται να εμφανιστεί ξανά μέσω της μεθόδου setVisible(true) διασφαλίζοντας την επανάκληση του παραθύρου χωρίς να δημιουργείται ξανά από την αρχή και δίχως την πλήρη έξοδο από την εφαρμογή) απλά ενεργοποιείται και γίνεται ορατό το προηγούμενο παράθυρο.
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(240, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));			
+		contentPane.setLayout(new BorderLayout(0, 0));			// Η παράμετρος εισόδου του BorderLayout ως (0, 0), υποδηλώνει ότι για hgap(οριζόντιο διάστημα) και για vgap(κάθετο διάστημα) δεν θα υπάρχει πρόσθετο διάστημα μεταξύ των περιοχών και χωρίς επιπλεόν κενά μεταξύ των περιοχών.
 		
-		JPanel pnlNorth = new JPanel();						
+		JPanel pnlNorth = new JPanel();						// Δημιουργία αυτού του πάνελ(pnlNorth-βόρειου πάνελ) και έχει διαχειριστή διάταξης FlowLayoutManager.(Δες IntroApplicationPlatform το pnlNorth για να συμπληρώσουμε από εκεί).
 		pnlNorth.setBackground(new Color(255, 250, 240));
-		contentPane.add(pnlNorth, BorderLayout.NORTH);			
+		contentPane.add(pnlNorth, BorderLayout.NORTH);			// Προσθέτει το pnlNorth στην περιοχή NORTH του contentPane σύμφωνα με την διάταξη που προδιαγράφει το BorderLayout.
 		
 		JLabel lblArxiko = new JLabel("Control Panel");
 		lblArxiko.setBackground(new Color(44, 62, 80));
-		lblArxiko.setHorizontalAlignment(SwingConstants.CENTER);		
+		lblArxiko.setHorizontalAlignment(SwingConstants.CENTER);		// Οριζόντια και κεντρική στοίχηση της ετικέτας(lblArxiko).
 		lblArxiko.setForeground(new Color(65, 105, 225));
 		lblArxiko.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		pnlNorth.add(lblArxiko);
@@ -83,29 +83,29 @@ public class Application extends JFrame {
 		JPanel pnlCenter = new JPanel();
 		pnlCenter.setBackground(new Color(255, 250, 240));
 		contentPane.add(pnlCenter, BorderLayout.CENTER);
-		pnlCenter.setLayout(new BoxLayout(pnlCenter, BoxLayout.Y_AXIS));		
-		pnlCenter.add(Box.createVerticalGlue());								
+		pnlCenter.setLayout(new BoxLayout(pnlCenter, BoxLayout.Y_AXIS));		// Σε αυτό το σημείο ορίζεται ο διαχειριστής διάταξης για το container(δηλαδή στο pnlCenter-στο κεντρικό πάνελ-δηλαδή ότι γραφικά στοιχεία/components μπουν μέσα στο κεντρικό πάνελ στο pnlCenter) θα εφαρμοστεί η διάταξη αυτών των components σύμφωνα με τον BoxLayoutManager με κατακόρυφη τοποθέτηση των components στον αξόνα του Y, δηλαδή από πάνω προς τα κάτω(top to bottom) θα στοιχίζονται τα components.
+		pnlCenter.add(Box.createVerticalGlue());								// Ο υποδοχέας συστατικών Box παρέχει διαφανείς διαχωριστές για ενδιάμεση τοποθέτηση στα συστατικά καλύπτοντας χώρο μεταξύ των συστατικών με καθορισμένο μέγεθος μέσω χρήσης της μεθόδου createVerticalGlue() που είναι η δημιουργία ενός εύπλαστου διαχωριστικού(αόρατου component) μεταξύ της ετικέτας(lblArxiko που βρίσκεται στο pnlNorth) και του κουμπιού(btnTeachers που βρίσκεται στο pnlCenter). Εξαιτίας του VerticalGlue όταν ο χρήστης κάνει resize το παράθυρο, τότε τα κουμπιά συνεχίζουν και παραμένουν κεντραρισμένα(απορροφώντας τον πλεονάζοντα κάθετο χώρο) στο παράθυρο με ομαλή προσαρμογή του περιεχομένου στο pnlCenter στις διάφορες αλλαγές μεγέθους.
 		
 		JButton btnteachers = new JButton("Teachers");
 		btnteachers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main_Application.insert.setVisible(true);				
-				Main_Application.startwin.setEnabled(false);			
+				Main_Application.insert.setVisible(true);				// Σε αυτό το σημείο καλείται το public static πεδίο insert από την κλάση Main_Application(δηλαδή από αυτήν που θα ξεκινάει η όλη εκτέλεση της εφαρμογής) καθώς γίνεται ορατό το παράθυρο (αναζήτησης/νέας εγγραφής), όπου τώρα ο χρήστης μετά το πάτημα του κουμπιού (Teachers), τού ανοίγει το νέο παράθυρο και μπορεί πλέον να αλληλεπιδράσει με αυτό.
+				Main_Application.startwin.setEnabled(false);			// Σε αυτό το σημείο απενεργοποιείται το τρέχον παράθυρο(δηλαδή του Control Panel) όταν ο χρήστης πατήσει το κουμπί Teachers κι επομένως γίνεται ορατό το παράθυρο Window_Search_Insert(δηλαδή το παράθυρο αναζήτησης/νέας εγγραφής).
 			}
 		});
 		
-		btnteachers.setAlignmentX(Component.CENTER_ALIGNMENT);			
-		btnteachers.setIcon(new ImageIcon(Application.class.getResource("/exetastiki_earino/Educators/classroom.png")));		
+		btnteachers.setAlignmentX(Component.CENTER_ALIGNMENT);			// Σε αυτό το σημείο το κουμπί(Teachers) τοποθετείται οριζόντια στο κέντρο του container(το οποίο ακολουθεί ως διαχειριστή διάταξης το BoxLayout), όπου όταν το BoxLayout στοιχειοθετήσει το κουμπί κάθετα στον άξονα (Y_AXIS), η σταθερά Component.CENTER_ALIGNMENT διασφαλίζει την οριζόντια και κεντραρισμένη τοποθέτηση του κουμπιού.
+		btnteachers.setIcon(new ImageIcon(Application.class.getResource("/exetastiki_earino/Educators/classroom.png")));		// Για το κουμπί (Teachers) μέσω της μεθόδου setIcon, γίνεται η τοποθέτηση ενός εικονιδίου επάνω στο κουμπί καθώς δημιουργείται ένα καινούργιο αντικείμενο καλώντας τον κατασκευαστή της κλάσης ImageIcon(όπου δημιουργεί ένα εικονίδιο σύμφωνα με την διεύθυνση URL που δίνεται ενώ ταυτόχρονα η εικόνα θα προφορτωθεί με τη χρήση του MediaTracker). Έτσι αφού δημιουργηθεί το αντικείμενο εικονιδίου από την συγκεκριμένη εικόνα, η μέθοδος (Application.class.getResource("/exetastiki_earino/Educators/classroom.png")) κάνει αναζήτηση της εικόνας που αποθηκεύτηκε μέσα στον φάκελο σύμφωνα με το classpath της εφαρμογής(το οποίο μπαίνει ως παράμετρος εισόδου της μεθόδου getResource που είναι τύπου String).
 		btnteachers.setBackground(new Color(175, 238, 238));
 		btnteachers.setForeground(new Color(70, 130, 180));
 		btnteachers.setFont(new Font("Tahoma", Font.BOLD, 20));
-		pnlCenter.add(btnteachers);										
-		pnlCenter.add(Box.createRigidArea(new Dimension(0, 20)));		
+		pnlCenter.add(btnteachers);										// Προσθήκη του κουμπιού στο container, δηλαδή στο κεντρικό πάνελ(pnlCenter) με οριζόντια κεντραρισμένη στοίχηση λόγω του setAllignmentX.
+		pnlCenter.add(Box.createRigidArea(new Dimension(0, 20)));		// Στο κεντρικό πάνελ(pnlCenter) γίνεται προσθήκη μέσω της μεθόδου add ενός αόρατου συστατικού(component) από το πακέτο java.awt που είναι το RigidArea-δημιουργία διαφανής σταθερής περιοχής 2 διαστάσεων καθορισμένου μεγέθους-(καθώς μπαίνει ανάμεσα στα 2 κουμπιά, δηλαδή μεταξύ του κουμπιού Teachers και του κουμπιού Version Info), στην ουσία πρόκειτε για ένα διαχωριστικό σταθερής περιοχής με σταθερό κενό μεταξύ των 2 συστατικών(των κουμπιών δηλαδή) με τιμές που σύμφωνα με την κλήση του κατασκευαστή Dimension ορίζονται ως 0 pixels για πλάτος-χωρίς να επηρρεάζεται ο οριζόντιος χώρος-και 20 pixels για ύψος για δημιουργία σταθερού/επιτρεπτού κενού μεταξύ των 2 components.
 		
 		JButton btnversion = new JButton("Version Info");
 		btnversion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {					
-				JOptionPane.showMessageDialog(contentPane, "Version: 2025-03 (4.35.0)\r\nAuthor: Evangelia\n" + "Build id: 20250306-0812\n" + "This product includes software developed by other open source projects including the Apache Software Foundation.", "About", JOptionPane.PLAIN_MESSAGE);			
+			public void actionPerformed(ActionEvent e) {					// Όταν πατιέται το κουμπί Version Info να εμφανίζεται ένα message dialogue.
+				JOptionPane.showMessageDialog(contentPane, "Version: 2025-03 (4.35.0)\r\nAuthor: Evangelia\n" + "Build id: 20250306-0812\n" + "This product includes software developed by other open source projects including the Apache Software Foundation.", "About", JOptionPane.PLAIN_MESSAGE);			// Το παράθυρο εμφανίζεται ακριβώς πάνω από το contentPane.
 			}
 		});
 		
@@ -117,5 +117,5 @@ public class Application extends JFrame {
 		pnlCenter.add(btnversion);
 		pnlCenter.add(Box.createVerticalGlue());
 		
-	}		
-}
+	}		// Εδώ κλείνει ο κατασκευαστής Application().
+}		// Εδώ κλείνει η κλάση.
