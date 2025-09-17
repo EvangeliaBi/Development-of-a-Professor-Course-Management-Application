@@ -1,190 +1,196 @@
-package exetastiki_earino;		
-import java.awt.EventQueue;		
+package exetastiki_earino;		// Δημιουργία του πακέτου αυτού προκειμένου να επιτευχθεί η καλύτερη ομαδοποίηση των κλάσεων μέσα σε αυτό το project καθώς όλα τα παράθυρα (JFrames της Swing) αλλά και η κεντρική κλάση (Main_Application-που από εκεί ξεκινάει η εκτέλεση του προγράμματος) βρίσκονται στο ίδιο πακέτο.
+import java.awt.EventQueue;		// Κάνω import(εισάγω) από το πακέτο AWT την κλάση EventQueue, η οποία συμβάλει στην σωστή εκτέλεση ενεργειών(με μία προκαθορισμλενη σειρά) όταν τρέχει το πρόγραμμα. Πιο συγκεκριμένα ο ρόλος αυτής της κλάσης είναι η προσπάθεια διατήρησης εκτέλεσης αυτών των διεργασιών ώστε η αντίδραση του γραφικού περιβάλλοντος να είναι η αναμενόμενη.
 
-import javax.swing.JFrame;		
+//Κάνω import (εισάγω) το framework(την βιβλιοθήκη) swing (κλάσεις και διεπαφές για GUI συστατικά), η οποία περιέχει όλες τις κλάσεις για την δημιουργία GUI (Grafical User Interface-γραφικού περιβάλλοντος διεπαφής χρήστη/επικοινωνίας), καθώς τα συστατικά (Components) της swing περιλαμβάνουν (κουμπιά, πλαίσια κειμένου, ετικέτες, περιγράμματα, την δημιουργία τμημάτων παραθύρων με δυνατότητες κύλισης, μενού, γραμμές εργαλείων, στοιχεία ελέγχου κειμένου HTML, λεζάντες ενώ το κάθε component(συστατικό) ξεκινάει με ένα κεφαλαίο γράμμα το J και στην συνέχεια ακολουθεί με κεφαλαίο το πρώτο γράμμα το όνομα που περιγράφει την λειτουργία αυτού του συστατικού (πχ. JLabel, JButton, JTextField, JTextArea). Η πλειονότητα των συστατικών της βιβλιοθήκης swing είναι lightweight(ελαφρά), καθώς η γλώσσα Java είναι υπεύθυνη για την γραφή αυτών των components. Η superclass όλων των γραφικών στοιχείων της swing είναι η Component.
+import javax.swing.JFrame;		// Η κλάση JFrame αποτελεί τον βασικό υποδοχέα σε μία εφαρμογή διότι μέσω αυτού δημιουργείται ένα αντικείμενο που αποτελεί το πλαίσιο της εφαρμογής, αποτελούμενο από ένα περίγραμμα και κουμπιών ελαχιστοποίησης, μεγιστοποίησης και κλεισίματος του παραθύρου. Μία κλάση (JFrame-δημιουργία πλαισίου για τοποθέτηση συστατικών όπως ετικέτες, κουμπιά, μενού) είναι ένας υποδοχέας (container) ενώ ταυτόχρονα υποδοχέας μπορεί να θεωρηθεί και μία κλάση Dialog(πλαίσια διαλόγου), JPanel(πανελ), ένα παράθυρο(JWindow). Το contentPane είναι ένας ειδικός χώρος περιεχομένου για την τοποθέτηση συστατικών καθώς είναι αντικείμενο της κλάσης Container του πακέτου java.awt ενώ η δήλωση της μεταβλητής contentPane ως τύπου Container και η χρήση της μεθόδου getContentPane() δίνει πρόσβαση στην τοποθέτηση των συστατικών στο χώρο του περιεχομένου.
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
+//Κάνω import (εισάγω) το πακέτο java.awt όπου εισάγω όλες τις κλάσεις που συμπεριλαμβάνονται μέσα σε αυτό το πακέτο, όπου αυτές οι κλάσεις είναι υπεύθυνες για την δημιουργία του περιβάλλοντος διεπαφής, της δημιουργίας γραφικών και εικόνων και πιο συγκεκριμένα τα χρώματα που επιλέγω για την εφαρμογή μου, την διάταξη που καθορίζεται από τους layout managers, την δημιουργία πλαισίων, κουμπιών, ετικετών, μενού καθώς όλες αυτές οι κλάσεις είναι διεπαφές που βρίσκονατι μέσα στο Abstract Window Toolkit (AWT). Τα συστατικά της AWT είναι γραμμένα με γηγενή κώδικα, ενώ είναι heavyweight (βαριά-δυνατότητα απεικόνισης στην οθόνη σε συγκεκριμένο λειτουργικό σύστημα) αλλάζοντας δυναμικά μορφή από Windows, για παράδειγμα σε Linux ενώ γίνονται import και οι Layout managers(BorderLayout, GridBagLayout, GridBagConstraints) για την σωστή διάταξη των στοιχείων στο παράθυρο. Πιο συγκεκριμένα είναι ο τρόπος διάταξης των γραφικών στοιχείων μέσα στο panel.
 import java.awt.BorderLayout;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;			
+import javax.swing.JOptionPane;			// Κάνω import(εισάγω) την κλάση JOptionPane η οποία επεκτείνει την JComponent από το πακέτο javax.swing και υλοποιεί την διεπαφή Accessible, η οποία διαθέτει πολλούς κατασκευαστές, μεθόδους και πεδία μέσω δημιουργίας πλαισίων διαλόγου για την επίτευξη επικοινωνίας με τον χρήστη. Τα πλαίσια έχουν να κάνουν με την εμφάνιση απλού μυνήματος, πλαισίου εισαγωγής, επιβεβαίωσης ενώ κάθε μέθοδος είτε θα επιστρέφει μία ακέραια τιμή εξαιτίας πατήματος του κουμπιού είτε ενός αλφαριθμητικού ως αποτέλεσμα. Στην ουσία μέσω της κλάσης JOptionPane δημιουργείται ένα pop up παράθυρο διαλόγου που ενημερώνει τον χρήστη για κάτι.
 
-import java.awt.Font;	
-import java.awt.Color;		
+import java.awt.Font;	// Για την απόδοση κειμένου με μία συγκεκριμένη γραμματοσειρά γίνεται import η κλάση Font από το πακέτο java.awt, όπου μέσω αυτής της κλάσης Font επιτυγχάνεται η δημιουργία και απόδοση του αντικειμένου στην οθόνη του υπολογιστή που περιγράφει το τυπογραφικό στοιχείο και το μέγεθός του.
+import java.awt.Color;		// Για την απόδοση  και ρύθμιση χρώματος στο Background & στο Foreground γίνεται import η κλάση Color από το πακέτο java.awt.
 
-import javax.swing.SwingConstants;		
+import javax.swing.SwingConstants;		// Κάνω import το interface(SwingConstants) που περιέχει κάποιες σταθερές(constants-Center, Left, Right, Top, Bottom) οι οποίες συμβάλουν στην τοποθέτηση και τον προσανατολισμό των Swing components στην οθόνη.
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.Box;			
+import javax.swing.Box;			// Κάνω import(εισάγω) την κλάση Box από το πακέτο javax.swing, η οποία χρησιμοποιεί τον διαχειριστή BoxLayout ως προεπιλεγμένο καθώς επεκτείνει την JComponent ενώ έχει την δυνατότητα δημιουργίας πολλών αόρατων συστατικών(components), τα οποία επηρρεάζουν το layout.
 
-import java.awt.event.*;	  
+import java.awt.event.*;	  // Μία κλάση για κάθε κατηγορία γεγονότων παρέχεται από την AWT ενώ αυτές οι κλάσεις είναι υποκλάσεις της abstract class AWTEvent. Κάνω import (εισάγω) το πακέτο java.awt.event, το οποίο περιέχει διεπαφές που υλοποιούνται από τον ακροατή συμβάντος (αντικείμενο κλάσης), καθώς αφορούν χειρισμό γεγονότων όπως για παράδειγμα (κλικ, πληκτρολόγηση). Επομένως όλα τα συστατικά του swing είναι πηγές συμβάντων(event source), διότι οι ενέργειες του χρήστη όπως(πάτημα ποντικιού, πίεση πλήκτρου) μετατρέπονται σε αντικείμενα συμβάντων(event object) παρέχοντας πληροφορίες για το συμβάν με αναφορά ως προς την πηγή του συμβάντος για τον χειρισμό από τον ακροατή του συμβάντος με διάφορους τύπους(πχ.MouseEvent, KeyEvent, WindowEvent) όπου κάθε ένας από αυτούς αντιστοιχούν στην υλοποίηση μιας διεπαφής ακροατή(πχ. MouseEventListener, WindowListener). Πιο συγκεκριμένα ο event listener είναι ένα αντικείμενο που ειδοποιείται όταν δημιουργηθεί ένα συμβάν παραλαμβάνοντας το αντικείμενο του συμβάντος ενώ το χρησιμοποιεί προκειμένου να καλεστεί ο κατάλληλος χειριστής συμβάντος(event handler) όπου είναι μία μέθοδος που αυνδέεται με τον ακροατή από ενέργειες που υλοποιεί στον κώδικα ο ίδιος ο προγραμματιστής κι έτσι εκτελούνται οι επιθυμητές ενέργειες. Επιπλέον καθώς ο χρήστης πληκτρολογεί σε ένα πεδίο κειμένου(JTextField), δημιουργούνται τα αντίστοιχα KeyEvents, τα οποία ειδοποιούν τους KeyListeners του αντίστοιχου γραφικού στοιχείου.
 
-import java.awt.GridBagLayout;			
-import java.awt.GridBagConstraints;			
-import java.awt.Insets;			
+import java.awt.GridBagLayout;			// Κάνω import τον συγκεκριμένο διαχειριστή διάταξης για να μπορέσει να χρησιμοποιηθεί μέσα στον κώδικα.
+import java.awt.GridBagConstraints;			// Κάνω import από το πακέτο java.awt την κλάση GridBagConstraints(η οποία περιέχει όλες τις παραμέτρους καθορισμού για κάθε συστατικό), διότι με όρισμα ένα αντικείμενο GridBagLayoutConstraints καθορίζονται οι παράμετροι εμφάνισης του αντικειμένου.
+import java.awt.Insets;			// Για την εφαρμογή των διαστημάτων, καθώς η παράμετρος insets καθορίζει τον ελέυθερο χώρογύρω από το συστατικό παρέχοντας τα εξής πεδία (top, bottom, left, right) ενώ ο τύπος της παραμέτρου είναι η κλάση java.awt.Insets.
 
-public class IntroApplicationPlatform extends JFrame {		 
+public class IntroApplicationPlatform extends JFrame {		// Η κλάση (IntroApplicationPlatform) επεκτείνει την κλάση JFrame(αντικείμενο του swing), που περιέχει τα εικονίδια μεγιστοποίησης, ελαχιστοποίησης και κλεισίματος καθώς η εμφάνιση του παραθύρου διαφέρει από λειτουργικό σύστημα Windows σε λειτουργικό σύστημα MacOs ενώ περιέχει όλα τα συστατικά της εφαρμογής. Επομένως βάσει κληρονομικότητας κι αφού η κλάση JFrame είναι η superclass της υποκλάσης μου, αυτό σημαίνει ότι η υποκλάση που επεκτείνει την JFrame κληρονομεί όλα τα πεδία και τις μεθόδους της superclass. 
 
     private static final long serialVersionUID = 1L;
     
-    private JPanel contentPane;			
-    private JTextField txtUsername;       
-    private JPasswordField txtPassword;     
+    private JPanel contentPane;			// Δημιουργία του private πεδίου contentPane τύπου JPanel που κατα κύριο λόγο είναι ένα κύριο πάνελ του κεντρικού παραθύρου που περιέχει όλα τα στοιχεία που εμπρόκειτο να δημιουργηθούν.
+    private JTextField txtUsername;       // Δημιουργία του private πεδίου για εισαγωγή ονόματος του χρήστη που είναι τύπου JTextField.
+    private JPasswordField txtPassword;     // Δημιουργία του private πεδίου για εισαγωγή κωδικού πρόσβασης του χρήστη που είναι τύπου JPasswordField.
 
-    public IntroApplicationPlatform() {  						
+    public IntroApplicationPlatform() {  						// Εντός του σώματος του κατασκευαστή της συγκεκριμένης subclass πραγματοποιείται η γραφική διαμόρφωση των στοιχείων του παραθύρου.
+        // Ορίζουμε τον τίτλο και τις βασικές ρυθμίσεις του παραθύρου.
+        setTitle("Digital Learning Ecosystem");					// Μέσω χρήσης της μεθόδου setTitle και με παράμετρο εισόδου ένα αλφαριθμητικό δεδομένο καθορίζεται ο τίτλος του παραθύρου.
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			// Μέσω χρήσης της μεθόδου setDefaultCloseOperation και βάζοντας ως παράμετρο εισόδου στην μέθοδο την κλάση JFrame, καθορίζω τί θα συμβεί στην εφαρμογή όταν ο χρήστης κλείσει το παράαθυρο με αποτέλεσμα τον πλήρη τερματισμό της εφαρμογής, πατώντας το κουμπί Χ (το εικονίδιο του κλεισίματος) βγαίνει από το αντίστοιχο παράθυρο.
+        setBounds(100, 100, 450, 300);		  					// Μέσω της μεθόδου setBounds καθορίζονται οι διαστάσεις και το μέγεθος του παραθύρου, όπου τα 2 πρώτα ορίσματα αντιστοιχούν στις συντεταγμένες (x,y αναφερόμενες στην τοποθεσία του παραθύρου στο αριστερό πλαίσιο) ενώ τα 2 τελευταία ορίσματα(width, height) αντιστοιχούν στο πλάτος και το ύψος του παραθύρου σε pixels.
         
-        setTitle("Digital Learning Ecosystem");					
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
-        setBounds(100, 100, 450, 300);		  					
+        // Δημιουργία του JPanel με BorderLayout.
+        contentPane = new JPanel();								// Εντός του contentPane δημιουργείται ένα νέο αντικείμενο της κλάσης JPanel, το οποίο εκχωρείται μέσα στο contentPane.
+        contentPane.setBackground(new Color(245, 245, 220));	// Για το contentPane που έχει εκχωρημένο το καινούργιο αντικείμενο (δηλαδή το panel) καλείται η μέθοδος setBackground(θέτει την κατάσταση του Background) βάζοντας ως παράμετρο της μεθόδου την δημιουργία ενός καινούργιου αντικειμένου με τον τελεστή new, όπου μετά τον τελεστή new καλείται ο κατασκευαστής Color με ορίσματα 3 ακέραιες αριθμητικές τιμές που αντιστοιχούν στο σύστημα RGB, το οποίο έχει να κάνει με την αναλογία των χρωμάτων κι έτσι καθορίζεται το χρώμα φόντου του Panel. Ο κατασκευαστής της κλάσης Color ορίζεται ως Color(int, int, int), όπου οι τιμές των παραμέτρων του κατασκευαστή κυμαίνονται από το 0 εώς το 255.
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));		// Για το contnetPane καλείται η μέθοδος setBorder(η οποία κληρονομείται από την JComponent), εφαρμόζοντας ένα περίγραμμα(το οποίο δεν φαίνεται οπτικώς γιατί είναι ένας κενός χώρος γύρω από το περιεχόμενο), καθώς εντός της παραμέτρου της μεθόδου δημιουργείται ένα καινούργιο αντικείμενο καλώντας τον κατασκευαστή της κλάσης EmptyBorder με ορίσματα 3 ακέραιες τιμές (οι οποίες αντιστοιχούν σε top, left, bottom, right) στα 5 pixels (padding), διασφαλίζοντας την κενή απόσταση από τα ακριανά σημεία του panel.
+        contentPane.setLayout(new BorderLayout());				// Ο καθορισμός του τρόπου τοποθέτησης των διαφόρων γραφικών στοιχείων που εισάγονται μέσα στο JPanel διασφαλίζεται από τον LayoutManager μέσω κλήσης της μεθόδου setLayout(η οποία κληρονομείται από την Container) καθώς στην προκειμένη περίπτωση ορίζεται το BorderLayout με διάταξη των συστατικών του panel σε 5 θέσεις (North, South, East, West, Center). Πιο συγκεκριμένα τα συστατικά που βρίσκονται σε North & South έχουν ως σκοπό την οριζόντια επέκταση για να πιάσουν όλο τον χώρο ενώ η τοποθέτηση των συστατικών σε East & West εκτείνονται μεταξύ των συστατικών North & South. Το North Panel περιλαμβάνει το μύνημα καλοσωρίσματος στην ψηφιακή πλατφόρμα ενώ στο center(κεντρικό) πάνελ περιέχεται η φόρμα εισόδου(για την απροχή ονόματος χρήστη και κωδικού πρόσβασης).
+        setContentPane(contentPane);							// Στην προκειμένη περίπτωση καθορίζεται το contentPane ως κύριο περιεχόμενο του JFrame, διότι μέσω της μεθόδου setcontentPane καθορίζεται ως root container του παραθύρου (JFrame), που σημαίνει ότι εμπρόκειτο να περιέχει όλα τα γραφικά στοιχεία που θα περιείχε σε αντίστοιχη περίπτωση ένα JPanel (αφού λειτουργεί ως JPanel) αντικαθιστώντας το περιεχόμενο που δημιουργείται αυτοματοποιημένα κατά την δημιουργία του JFrame διαχειρίζοντας έτσι αποτελεσματικότερα την διάταξη των στοιχείων και τα περιθώρια.
         
+        // North panel για το header με FlowLayout.
+        JPanel pnlNorth = new JPanel();							// Το συγκεκριμένο pnlNorth(βόρειο πάνελ) έχει ως διαχειριστή διάταξης το FlowLayout(που επεκτείνει την κλάση Object και υλοποιεί/implements το LayoutManager), καθώς αποτελεί ένα αντικείμενο της κλάσης FlowLayout του πακέτου java.awt, όπου η τοποθέτηση των συστατικών πραγματοποιείται από αριστερά προς τα δεξιά κι από επάνω προς τα κάτω. Αυτό σημαίνει ότι υπάρχει συνεχόμενη τοποθέτηση των συστατικών από το επάνω αριστερό άκρο της πρώτης σειράς μέχρι το δεξιό άκρο της εφαρμογής ενώ ταυτόχρονα όσα components περισσέψουν πραγματοποιείται τοποθέτηση στην επόμενη σειρά(δηλαδή από κάτω) πάλι από τα αριστερά προς τα δεξιά μέχρι την πλήρη τοποθέτηση όλων των συστατικών. Δημιουργία ενός JPanel με τοποθέτηση συστατικού North και πιο συγκεκριμένα στο πάνω μέρος του παραθύρου(λόγω και του BorderLayout που διαθέτει το κύριο container), για την τοποθέτηση του header της ετικέτας με εφαρμογή του alignment.center(για το κεντράρισμα) μέσα στο panel καθώς και με hgap(οριζόντιο κενό μεταξύ των στοιχείων στα 5 pixels) και vgap(κάθετο κενό στα 5 pixels σε περίπτωση που απαιτηθεί η διαμόρφωση περισσότερων σειρών για τα στοιχεία).
+        pnlNorth.setBackground(new Color(245, 245, 220));		// Καθορισμός χρώματος φόντου για το panel σε απόλυτη αρμονία με το υπόλοιπο περιεχόμενο.
+        JLabel lblWelcome = new JLabel("Welcome to Digital Learning Ecosystem");		// Δημιουργία ετικέτας(label), η οποία είναι αντικείμενο της κλάσης JLabel(η οποία είναι η subclass της JComponent), με σκοπό την παροχή πληροφοριών και μηνυμάτων στον χρήστη ενώ έχουν την δυνατότητα εμφάνισης εικόνων μαζί με το κείμενο καθώς και χρήσης ετικετών HTML για μορφοποίηση περιεχομένου. Στην προκειμένη περίπτωση χρησιμοποιείται ο κατασκευαστής JLabel με όρισμα ένα String txt(που αφορά το μήνυμα καλοσωρίσματος στην ψηφιακή πλατφόρμα).
+        lblWelcome.setHorizontalAlignment(SwingConstants.CENTER);					// Για το τρέχον αντικείμενο lblWelcome καλείται η μέθοδος setHorizontalAlignment, μέσω της οποίας επιτυγχάνεται οριζόντια στοίχηση του περιεχομένου θέτοντας ως παράμετρο εισόδου της μεθόδου μία σταθερά και πιο συγκεκριμένα μία διεπαφή(interface-SwingConstants που ανήκει στην βιβλιοθήκη java.swing καθώς οι σταθερές που ορίζονται ως constants είναι προκαθορισμένες τιμές όπου η τιμή τους δεν μεταβάλλεται μετά την αρχική τους ανάθεση), η οποία υλοποιεί(implements) την τοποθέτηση και τον προσανατολισμό των συστατικών πάνω στην οθόνη και πιο συγκεκριμένα με οριζόντια στοίχηση και τοποθέτηση του κειμένου της ετικέτας στο κέντρο μέσω χρήσης της προκαθορισμένης σταθεράς, δηλαδή του (CENTER).
+        lblWelcome.setFont(new Font("Tahoma", Font.PLAIN, 20));			// Για το τρέχον αντικείμενο (δηλαδή την ετικέτα που δημιουργήθηκε παραπάνω δηλώνεται μία συγκεκριμένη γραμματοσειρά), δηλαδή καλείται η μέθοδος setFont(η οποία κληρονομείται από την JComponent και ορίζει την γραμματοσειρά για το τρέχον αντικείμενο), θέτωντας ως παράμετρο εισόδου της μεθόδου setFont την δημιουργία ενός καινούργιου αντικειμένου τύπου Font(που ανήκει στην βιβλιοθήκη java.awt) και ανάθεση σε JLabel με 3 παραμέτρους ως ορίσματα(το όνομα της γραμματοσειράς που είναι η Tahoma, το στυλ της γραμματοσειράς δηλαδή ένα κανονικό κείμενο-PLAIN και το μέγεθος της γραμματοσειράς, δηλαδή 20).Επομένως μέσω της μεθόδου setFont() απαιτείται ως όρισμα ένα αντικείμενο τύπου Font καθώς αυτό επιτυγχάνεται μέσω δημιουργίας του κατασκευαστή Font(String, int, int), όπου το String αντιστοιχεί στο είδος της γραμματοσειράς, το πρώτο int αντιστοιχεί σε 3 σταθερές(Font.PLAIN, Font.BOLD, Font.ITALIC) στον τύπο των γραμμάτων(αφού αποδίδεται είτε με αλφαριθμητικό δεδομένο είτε με αριθμό) και το τελευταίο ακέραιο όρισμα αντιστοιχεί στο μέγεθος του σημείου, όπου αυτός ο ακέραιος αριθμός αντιπροσωπεύει το 1/72 της ίντσας ενώ είναι αντιληπτό ότι ένα εκτυπωμένο κείμενο αποτελείται από 12 σημεία. Πιο συγκεκριμένα η Java ενστερνίζεται την σύμβαση ότι ένα σημείο σε προβολή κειμένου είναι ισοδύναμο με μία μονάδα στις συντεταγμένες του χρήστη. 
+        lblWelcome.setForeground(new Color(100, 149, 237));				// Για το τρέχον αντικείμενο καλείται η μέθοδος setForeground μέσω της οποίας καθορίζεται το χρώμα των γραμμάτων σε σύστημα RGB που θα έχει η ετικέτα του header του παραθύρου.
+        pnlNorth.add(lblWelcome);										// Σε αυτό το σημείο καλείται η μέθοδος add(η οποία ανήκει στην κλάση Container) και πιο συγκεκριμένα καλείται στο pnlNorth για την προσθήκη του lblWelcome(που περιέχει μέσα το μήνυμα καλοσωρίσματος) στο βόρειο τμήμα του παραθύρου σύμφωνα με την διάταξη που έχει οριστεί από τον LayoutManager.
+        contentPane.add(pnlNorth, BorderLayout.NORTH);					// Για το contentPane(που είναι το κύριο container του παραθύρου JFrame) καλείται η μέθοδος add μέσω της οποίας τίθεται ως παράμετρος εισόδου ο διαχειριστής διάταξης BorderLayout.NORTH λέγοντας στην ουσία στον διαχειριστή διάταξης να τοποθετήσει το pnlNorth στην βόρεια περιοχή του παραθύρου(ως Header).
         
-        contentPane = new JPanel();								
-        contentPane.setBackground(new Color(245, 245, 220));	
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));		
-        contentPane.setLayout(new BorderLayout());				
-        setContentPane(contentPane);							
+        // Δημιουργία του κεντρικού πάνελ με GridBagLayout.
+        JPanel pnlCenter = new JPanel(new GridBagLayout());			// Το panel είναι αντικείμενο της κλάσης JPanel που περιέχει μία ορθογώνια περιοχή ενώ σε περίπτωση που δεν δηλωθεί συγκεκριμένος layout manager τοποθετείται το default layout manager (το οποίο είναι το FlowLayoutManager), καθώς με την δημιουργία ενός JPanel ομαδοποιώ όλα τα γραφικά στοιχεία, καθώς μέσα σε αυτό το κεντρικό panel (στο κέντρο του παραθύρου) μπαίνουν όλα τα γραφικά στοιχεία. Με παράμετρο εισόδου στον κατασκευαστή JPanel καθορίζεται ότι τα στοιχεία που θα τοποθετηθούν στο panel εμπρόκειτο να τοποθετηθούν σύμφωνα με το πρότυπο που ορίζει ο GridBagLayout διαχειριστής διάταξης(τοποθέτηση των components σε ένα πλέγμα-grid), ο οποίος δεν δέχεται καμία παράμετρο δημιουργώντας ένα ορθογώνιο πλέγμα κελιών όπου κάθε γραμμή και κάθε στήλη ανάλογα των συστατικών που περιέχει ενδέχεται να έχει οποιοδήποτε μέγεθος ενώ κάθε συστατικό ενδέχεται να καταλαμβάνει ένα ή και περισσότερα κελιά με αποτέλεσμα να ελέγχονται καλύτερα τα περιθώρια(insets) και ο τρόπος διάταξης κάθε κελιού μέσω χρήσης του αντικειμένου GridBagConstraints. 
+        pnlCenter.setBackground(new Color(245, 245, 220));			// Με τρέχον αντικέιμενο το pnlCenter που δημιουργήθηκε παραπάνω και είναι τύπου JPanel καλείται η μέθοδος setBackground για τον καθορισμό του χρώματος του φόντου για αυτό το component(συστατικό), βάζοντας ως παράμετρο εισόδου ένα καινούργιο αντικείμενο με τον τελεστή δημιουργίας new καλώντας τον κατασκευαστή της κλάσης Color (που έχει γίνει import από το πακέτο java.awt) με 3 ακέραιες τιμές ως παραμέτρους, οι οποίες αντιστοιχούν στο σύστημα RGB.
+        contentPane.add(pnlCenter, BorderLayout.CENTER);			// Προσθήκη στο κέντρο του contentPane.
         
+        // Δημιουργούμε τα στοιχεία της φόρμας.
+        JLabel lblUsername = new JLabel("Username:");						// Δημιουργώ ένα label(αντικείμενο με όνομα lblUsername) τύπου JLabel με τον τελεστή new (υπεύθυνος για την δημιουργία αντικειμένων) καλώντας τον κατασκευαστή JLabel και βάζοντας ως παράμετρο εισόδου ένα string (αλφαριθμητικού τύπου δεδομένο, δηλαδή το "Username: "). 
+        lblUsername.setHorizontalAlignment(SwingConstants.CENTER);			// Οριζόντια και κεντρική στοίχηση της ετικέτας lblUsername.
+        lblUsername.setFont(new Font("Tahoma", Font.BOLD, 15));				// Καθορισμός γραμματοσειράς με καθορισμό του στυλ της γραμματοσειράς σε Bold(έντονα γράμματα).
+        lblUsername.setForeground(new Color(100, 149, 237));				// Καθορισμός χρώματος γραμμάτων του κειμένου της ετικέτας(Username).
         
-        JPanel pnlNorth = new JPanel();							
-        pnlNorth.setBackground(new Color(245, 245, 220));		
-        JLabel lblWelcome = new JLabel("Welcome to Digital Learning Ecosystem");		
-        lblWelcome.setHorizontalAlignment(SwingConstants.CENTER);					
-        lblWelcome.setFont(new Font("Tahoma", Font.PLAIN, 20));			 
-        lblWelcome.setForeground(new Color(100, 149, 237));				
-        pnlNorth.add(lblWelcome);										
-        contentPane.add(pnlNorth, BorderLayout.NORTH);					
+        txtUsername = new JTextField(15);									// Για το πεδίο txtUsername (που δηλώθηκε παραπάνω ότι είναι τύπου JTextField αυτής της κλάσης δηλαδή) εκχωρώ ένα καινούργιο αντικείμενο καλώντας τον κατασκευαστή JTextField με παράμετρο εισόδου έναν ακέραιο αριθμό(δηλαδή το 15), καθώς δημιουργείται ένα πεδίο κειμένου(για εισαγωγή κειμένου από τον χρήστη και συγκεκριμένα αποτελεί το πεδίο για πληκτρολόγηση του username του) με καθορισμένο αριθμό στηλών που είναι το 15(ότι δηλαδή θα περιέχει 15 στήλες).
+        txtUsername.setHorizontalAlignment(SwingConstants.CENTER);			// Οριζόντια και κεντραρισμένη στοίχηση για το αντικείμενο τύπου JTextField.
+        txtUsername.setBackground(new Color(176, 196, 222));				// Καθορισμός background χρώματος του πεδίου κειμένου με μία απόχρωση μπλε.
         
+        JLabel lblPassword = new JLabel("Password:");						// Δημιουργία ετικέτας μέσω κατασκευαστή της κλάσης JLabel για το Password(κωδικό πρόσβασης) με τις ίδιες γραφικές παραμέτρους όπως η ετικέτα Username.
+        lblPassword.setHorizontalAlignment(SwingConstants.CENTER);			// Οριζόντια και κεντραρισμένη στοίχηση.
+        lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));				// Ορισμός γραμματοσειράς.
+        lblPassword.setForeground(new Color(100, 149, 237));				// Ορισμός χρώματος γραμμάτων.
         
-        JPanel pnlCenter = new JPanel(new GridBagLayout());			 
-        pnlCenter.setBackground(new Color(245, 245, 220));			
-        contentPane.add(pnlCenter, BorderLayout.CENTER);			
+        txtPassword = new JPasswordField(15);							// Δημιουργία συνθηματικού πεδίου κειμένου κι εκχώρηση εντός του πεδίου txtPassword (που δημιουργήθηκε παραπάνω)χρησιμοποιώντας τον κατασκευαστή της κλάσης JPasswordField, η οποία κλάση JPasswordField υπάγεται/επεκτείνει στην κλάση JTextField, καθώς αυτός ο κατασκευαστής δημιουργεί ένα καινούργιο κενό πεδίο για εισαγωγή κωδικού πρόσβασης με καθορισμένο αριθμό στηλών που είναι το (15). Πιο συγκεκριμένα στην οθόνη φαίνεται ότι κάτι πληκτρολογείται αλλά δεν φαίνονται οι original χαρακτήρες, διότι ζωγραφίζονται οι αστερίσκοι.
+        txtPassword.setHorizontalAlignment(SwingConstants.CENTER);		// Οριζόντια και κεντραρισμένη στοίχηση για το αντικείμενο τύπου JPasswordField.
+        txtPassword.setBackground(new Color(176, 196, 222));			// Ορισμός ίδιου background χρώματος με το username.
         
+        JButton btnLogin = new JButton("Log in");				// Δημιουργία/Προσθήκη του συστατικού(component) κι ενσωμάτωσή του στο pnlCenter(δηλαδή στο κεντρικό panel τοποθετημένο σύμφωνα με τους κανονισμούς που ορίζει το GridBagLayout για την εμφάνιση στην εφαρμογή), δηλαδή του JButton, γίνεται δημιουργώντας το αντικείμενο το οποίο είναι το btnLogin(διαδραστικό στοιχείο για την πρόκληση μίας ενέργειας όταν πατηθεί το κουμπί από τον χρήστη, δηλαδή τον χειρισμό συμβάντων που πυροδοτούνται από τις ενέργειες του χρήστη με αποτέλεσμα την επιτυχή εισόδό του στην εφαρμογή και το άνοιγμα του δεύτερου παραθύρου Control Panel). Πιο συγκεκριμένα το κουμπί(btnLogin) είναι αντικείμενο της κλάσης JButton καθώς η ενεργοποίηση λειτουργίας της εφαρμογής θα επιτευχθεί μέσω πατήματος του κουμπιού, όπου καλείται ο κατασκευαστής της κλάσης JButton με όρισμα ένα αλφαριθμητικό δεδομένο που αποτελεί την λεζάντα τοποθετημένη πάνω στο κουμπί(Log in).
+        btnLogin.setFont(new Font("Tahoma", Font.BOLD, 13));	// Καθορισμός της γραμματοσειράς.
+        btnLogin.setForeground(Color.WHITE);					// Σε αυτό το σημείο καλείται ένα έτοιμο χρώμα με το όνομα (WHITE), το οποίο τίθεται ως Foreground.
+        btnLogin.setBackground(new Color(135, 206, 235));		// Καθορισμός χρώματος φόντου με την δνωστή διαδικασία που έχει αναλυθεί παραπάνω.
         
-        JLabel lblUsername = new JLabel("Username:");						 
-        lblUsername.setHorizontalAlignment(SwingConstants.CENTER);			
-        lblUsername.setFont(new Font("Tahoma", Font.BOLD, 15));				
-        lblUsername.setForeground(new Color(100, 149, 237));				
+        JLabel lblForgot = new JLabel("<html><u>Forgot my password</u></html>");		// Με την δημιουργία ενός καινούργιου αντικειμένου/μίας καινούργιας ετικέτας(lblForgot) της κλάσης JLabel και υποκλάση της JComponent, καλείται ο κατασκευαστής JLabel με παράμετρο εισόδου την χρήση ετικέτας HTML για μορφοποίηση του περιεχομένου καθώς η παράμετρος του κατασκευαστή είναι ένα String(αλφαριθμητικό δεδομένο) που σημαίνει ότι η ετικέτα HTML που τίθεται δίνει την δυνατότητα στο JLabel να υποστηρίξει βασικά HTML στοιχεία(γραμματοσειρές, χρώματα, πίνακες) ενώ το <u> εμφανίζει το κείμενο υπογραμμισμένο(δηλαδή την φράση ότι ο χρήστης ξέχασε το κωδικό πρόσβασής του στην πλατφόρμα) ενώ καθίσταται ταυτόχρονα αυτή η περιοχή ως hyperlink(υπερσύνδεσμος) δίνοντας την εντύπωση στον χρήστη ότι πατώντας τον υπερσύνδεσμο μπορεί να ανακτήσει τον κωδικό πρόσβασής του στην εφαρμογή καθώς πρόκειται για ένα διαδραστικό στοιχείο δίνοντας την εντύπωση στον χρήστη ότι είναι σημαντικό να ανακτήσει τον κωδικό του για να μεταβεί στην επόμενη ενέργεια αναφορικά με την εφαρμογή.
+        lblForgot.setForeground(new Color(100, 149, 237));			// Καθορισμός χρώματος γραμμάτων μέσω μεθόδου setForeground που αναλύθηκε και παραπάνω.
         
-        txtUsername = new JTextField(15);									
-        txtUsername.setHorizontalAlignment(SwingConstants.CENTER);			
-        txtUsername.setBackground(new Color(176, 196, 222));				
+        GridBagConstraints gbc = new GridBagConstraints();			// Δημιουργείται ένα καινούργιο αντικείμενο με όνομα(gbc) τύπου GridBagConstraints αυτής της κλάσης με τον τελεστή new καθώς και ο διαχειριστής διάταξης που έχει καθοριστεί είναι το GridBagLayout παρέχοντας ένα αντικέιμενο GridBagConstraints με καθορισμό συγκεκριμένων παραμέτρων που θέλουμε να εφαρμόσουμε.
+        gbc.insets = new Insets(10, 10, 10, 10);				// Για το τρέχον αντικείμενο gbc εφαρμόζεται η παράμετρος insets της κλάσης GridBagConstraints, καθορίζοντας τον ελέυθερο χώρο(τα περιθώρια) γύρω από την τοποθέτηση του συστατικού για την αποφυγή τοποθέτησης των συστατικών στοιχείων πολύ στενά το ένα με το άλλο με άνω περιθώριο(top=10 pixels), κάτω περιθώριο(bottom=10 pixels), αριστερό περιθώριο(left=10 pixels) και δεξί περιθώριο(right= 10 pixels).  
+        gbc.fill = GridBagConstraints.HORIZONTAL;				// Η παράμετρος fill στο αντικείμενο(gbc) καθορίζει το μέγεθος που θα πάρει το συστατικό σε σχέση με τον χώρο στον οποίο περιέχεται έτσι ώστε σε περίπτωση που το μέγεθος του κελιού είναι μεγαλύτερο από το προτιμώμενο μέγεθος η τιμή που τίθεται είναι GridBagConstraints.HORIZONTAL(όπου σε αυτή την περίπτωση το συστατικό απλώνεται για την κατάληψη όλου του οριζόντιου χώρου που του παρέχεται χωρίς καμία αλλαγή στο ύψος του). Καθιστώντας την παράμετρο fill = GridBagConstraints.HORIZONTAL, στην ουσία σταθεροποιείται το ύψος του component λέγοντας στον διαχειριστή διάταξης ότι σε περίπτωση ύπαρξης πλεονάζοντος χώρου το component να προβεί σε οριζόντια επέκταση.
         
-        JLabel lblPassword = new JLabel("Password:");						
-        lblPassword.setHorizontalAlignment(SwingConstants.CENTER);			
-        lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));				
-        lblPassword.setForeground(new Color(100, 149, 237));				
+        // Προσθήκη filler στοιχείου στην κορυφή (vertical glue) για οριζόντια κατανομή του κάθετου χώρου.
+        GridBagConstraints gbcTop = (GridBagConstraints) gbc.clone();		// Σε αυτό το σημείο πραγματοποιείται κλωνοποίηση του υπάρχοντος αντικειμένου και ανάθεση/εκχώρηση στην μεταβλητή gbcTop όπου στην ουσία για να μην υπάρξει τροποποίηση των αρχικών ρυθμίσεων, δημιουργείται αντίγραφο του αρχικού αντικειμένου μέσω χρήσης της μεθόδου clone(η οποία τροποποιείται/γίνεται override με την εφαρμογή συγκεκριμένων ιδιοτήτων χωρίς τον επηρρεασμό των αρχικών ρυθμίσεων του gbc) ενώ ταυτόχρονα μέσω χρήσης του (GridBagConstraints) καθορίζονται οι παράμετροι τοποθέτησης για το στοιχείο που εμπρόκειτο να τοποθετηθεί στο συγκεκριμένο layout. 
+        gbcTop.gridx = 0;							// Σε αυτό το σημείο για το αντικείμενο gbcTop ορίζεται η στήλη με συντεταγμένη x στο grid για την τοποθέτηση του στοιχείου ενώ εγχωρείται η τιμή 0 εξακριβώνοντας την έναρξη του στοιχείου filler από την πρώτη στήλη του grid στο pnlCenter τοποθετώντας το filler στοιχείο στην στήλη 0 μέσω αποτελέσματος που προέκυψε από το Box.createVerticalGlue(), αφού το glue είναι ένα αόρατο συστατικό, το οποίο διαστέλλεται όσο χρειάζεται για το γέμισμα του κενού χώρου μεταξύ των γειτονικών συστατικών ειδικά για ορατά στοιχεία που ενδέχεται να έχουν μέγιστο πλάτος (οριζόντια) ή ύψος (κάθετα). Οι παράμετροι της κλάσης GridBagConstraints που στην προκειμένη περίπτωση είναι(int gridx, int gridy), αποτελούν τις συντεταγμένες του επάνω αριστερού σημείου του συστατικού στο κελί ενώ το ανώτερο αριστερό κελί διαθέτει συντεταγμένες(0,0). 
+        gbcTop.gridy = 0;							// Σε αυτό το σημείο για το αντικείμενο gbcTop καθορίζεται η σειρά  με συντεταγμένη y για την τοποθέτηση του στοιχείου στην πρώτη γραμμή με τιμή 0 και εμφάνιση στο επάνω μέρος του container.
+        gbcTop.gridwidth = 2;						// Σε αυτό το σημείο καθορίζεται το πλάτος στο grid, όπου το filler στοιχείο εμπρόκειτο να καταλαμβάνει 2 στήλες(εξ ου και η τιμή 2 που εγχωρείται) μέσω ευθυγράμμισης και οριζόντιας επέκτασης σε όλο το πλάτος του container.  
+        gbcTop.weighty = 1;							// Σε αυτό το σημείο καθορίζεται ο τρόπος/πώς δηλαδή θα μοιραστεί ο ελέυθερος χώρος, διότι μέσω της τιμής 1 που εκχωρείται το στοιχείο filler έχει την δυνατότητα να εκμεταλλευτεί όλο τον διαθέσιμο κάθετο χώρο με την αρμονική τοποθέτηση των υπόλοιπων στοιχείων γύρω από το filler.
+        gbcTop.fill = GridBagConstraints.VERTICAL;			// Σε αυτό το σημείο το αντικέιμενο μέσω χρήσης του GridBagConstraints.VERTICAL, έχει ως σκοπό να καταλάβει όλο το διατιθέμενο ύψος χωρίς την μεταβολή του μήκους του σε κάθετη κατέυθυνση εντός του κελιού που έχει οριστεί.
+        pnlCenter.add(Box.createVerticalGlue(), gbcTop);		// Μέσω χρήσης της μεθόδου add πραγματοποιείται η προσθήκη ενός filler στοιχείου στο pnlCenter μέσω της μεθόδου Box.createVerticalGlue(), καθώς αυτό βοηθά στην περίπτωση εάν τα συστατικά του Box έχουν ένα fixed size χρησιμοποιείται η προαναφερθείσα μέθοδος για τον βέλτιστο έλεγχο των θέσεων των συστατικών με επιστροφή ενός αόρατου στοιχείου(glue component) για το γέμισμα του κάθετου χώρου σε περίπτωση που υπάρχει διαθέσιμος χώρος, καθώς το gbcTop, στο οποίο αναφερθήκαμε προηγουμένως, παρέχει στον διαχειριστή διάταξης οδηγίες για το πού και με ποιον τρόπο να πραγματοποιηθεί η τοποθέτηση του filler στοιχείου στο pnlCenter.
         
-        txtPassword = new JPasswordField(15);							
-        txtPassword.setHorizontalAlignment(SwingConstants.CENTER);		
-        txtPassword.setBackground(new Color(176, 196, 222));			
+        // Username Label
+        GridBagConstraints gbcUsernameLabel = (GridBagConstraints) gbc.clone();		// Κλωνοποίηση του στοιχείου gbc για τον καθορισμό συγκεκριμένων ρυθμίσεων για την ετικέτα (username).
+        gbcUsernameLabel.gridx = 0;								// Τοποθέτηση του αντικειμένου στην πρώτη στήλη, λόγω της τιμής του gridx που είναι 0.
+        gbcUsernameLabel.gridy = 1;								// Τοποθέτηση του αντικειμένου στην δεύτερη σειρά, λόγω της τιμής gridy που είναι 1.
+        gbcUsernameLabel.anchor = GridBagConstraints.EAST;		// Στο τρέχον αντικείμενο gbcUsernameLabel εφαρμόζεται η παράμετρος anchor του αντικειμένου GridBagConstraints, όπου μέσω αυτής της παραμέτρου καθορίζεται πού θα τοποθετηθεί το συστατικό εντός του κελιού σε περίπτωση που είναι μικρότερο από τον χώρο που το περιέχει με αποτέλεσμα να ορίζεται η τιμή GridBagConstraints.EAST καθορίζοντας την ανατολική(δεξιά) στοίχηση του συστατικού στο κελί αντί για κέντρο ή οποιαδήποτε άλλη θέση σε περίπτωση που οι διαστάσεις του component είναι μικρότερες από την δοθείσα περιοχή καθορίζοντας πού να τοποθετηθεί το συστατικό σύμφωνα με την δοθείσα περιοχή.
+        pnlCenter.add(lblUsername, gbcUsernameLabel);			// Μέσω χρήσης της μεθόδου add(Component comp, Object constraints) πραγματοποιείται η προσθήκη του lblUsername(του συστατικού Component) εντός του container(pnlCenter) εφαρμόζοντας τις ρυθμίσεις που καθορίζονται στο αντικέιμενο(Object) gbcUsernameLabel εφαρμόζοντας την προσθήκη αυτού του συστατικού(lblUsername) μαζί με το αντικείμενο περιορισμών(Object constraints) καθορίζοντας το που και με ποιον τρόπο θα τοποθετηθεί το component μέσα στο container ενώ όπως έχει προαναφερθεί το gbcUsernameLabel περιέχει τους κανονισμούς που έχουμε ορίσει για το lblUsername(στοίχηση και σε καθορισμένο grid κελί) ενώ τυτόχρονα με τον GridBagLayout διαχειριστή διάταξης θα πραγματοποιηθεί αυτόματη τοποθέτηση της ετικέτας Username σε συγκεκριμένο καθορισμένο κελί μέσω ανατολικής(δεξιάς) στοίχησης.
         
-        JButton btnLogin = new JButton("Log in");				
-        btnLogin.setFont(new Font("Tahoma", Font.BOLD, 13));	
-        btnLogin.setForeground(Color.WHITE);					
-        btnLogin.setBackground(new Color(135, 206, 235));		
+        // Username TextField
+        GridBagConstraints gbcUsernameField = (GridBagConstraints) gbc.clone();		// Κλωνοποίηση του στοιχείου gbc για τον καθορισμό συγκεκριμένων ρυθμίσεων για το TextField (gbcUsernameField-πεδίο κειμένου).
+        gbcUsernameField.gridx = 1;								// Τοποθέτηση του αντικειμένου στην 2η στήλη (gridx=1).
+        gbcUsernameField.gridy = 1;								// Τοποθέτηση του αντικειμένου στην 2η σειρά (gridy=1).
+        gbcUsernameField.anchor = GridBagConstraints.WEST;		// Εφαρμογή ευθυγράμμισης και τοποθέτησης στα αριστερά(WEST) για το αντικείμενο με ορισμό του anchor σε WEST.
+        pnlCenter.add(txtUsername, gbcUsernameField);			// Ίδια διαδικασία με το Username Label.
         
-        JLabel lblForgot = new JLabel("<html><u>Forgot my password</u></html>");		
-        lblForgot.setForeground(new Color(100, 149, 237));			
+        // Password Label
+        GridBagConstraints gbcPasswordLabel = (GridBagConstraints) gbc.clone();		// Ίδια διαδικασία κλωνοποίησης με τα από πάνω(UsernameLabel).
+        gbcPasswordLabel.gridx = 0;								// Τοποθέτηση του αντικειμένου στην 1η στήλη (gridx=0).
+        gbcPasswordLabel.gridy = 2;								// Τοποθέτηση του αντικειμένου στην 3η σειρά (gridy=2).
+        gbcPasswordLabel.anchor = GridBagConstraints.EAST;		// Στοίχηση και ευθυγράμμιση στα δεξιά, λόγω του anchor=EAST.
+        pnlCenter.add(lblPassword, gbcPasswordLabel);			// Ίδια διαδικασία με το Username Label.
         
-        GridBagConstraints gbc = new GridBagConstraints();			
-        gbc.insets = new Insets(10, 10, 10, 10);				  
-        gbc.fill = GridBagConstraints.HORIZONTAL;				
-        
-        
-        GridBagConstraints gbcTop = (GridBagConstraints) gbc.clone();		 
-        gbcTop.gridx = 0;							 
-        gbcTop.gridy = 0;							
-        gbcTop.gridwidth = 2;						 
-        gbcTop.weighty = 1;							
-        gbcTop.fill = GridBagConstraints.VERTICAL;			
-        pnlCenter.add(Box.createVerticalGlue(), gbcTop);		
-        
-        
-        GridBagConstraints gbcUsernameLabel = (GridBagConstraints) gbc.clone();		
-        gbcUsernameLabel.gridx = 0;								
-        gbcUsernameLabel.gridy = 1;								
-        gbcUsernameLabel.anchor = GridBagConstraints.EAST;		
-        pnlCenter.add(lblUsername, gbcUsernameLabel);			
-        
-        
-        GridBagConstraints gbcUsernameField = (GridBagConstraints) gbc.clone();		
-        gbcUsernameField.gridx = 1;								
-        gbcUsernameField.gridy = 1;								
-        gbcUsernameField.anchor = GridBagConstraints.WEST;		
-        pnlCenter.add(txtUsername, gbcUsernameField);			
-        
-        GridBagConstraints gbcPasswordLabel = (GridBagConstraints) gbc.clone();		
-        gbcPasswordLabel.gridx = 0;								
-        gbcPasswordLabel.gridy = 2;								
-        gbcPasswordLabel.anchor = GridBagConstraints.EAST;		
-        pnlCenter.add(lblPassword, gbcPasswordLabel);			
-        
-        GridBagConstraints gbcPasswordField = (GridBagConstraints) gbc.clone();			
+        // Password Field
+        GridBagConstraints gbcPasswordField = (GridBagConstraints) gbc.clone();			// Παρόμοια, το πεδίο κωδικού τοποθετείται στη δεύτερη στήλη της τρίτης σειράς και ευθυγραμμίζεται προς τα αριστερά.
         gbcPasswordField.gridx = 1;
         gbcPasswordField.gridy = 2;
         gbcPasswordField.anchor = GridBagConstraints.WEST;
         pnlCenter.add(txtPassword, gbcPasswordField);
         
+        // Κουμπί "Log in" — καταλαμβάνει 2 στήλες.
+        GridBagConstraints gbcLogin = (GridBagConstraints) gbc.clone();			// Κλωνοποίηση για το κουμπί Log in.
+        gbcLogin.gridx = 0;									// Τοποθέτηση του Log in στην πρώτη στήλη(gridx=0).
+        gbcLogin.gridy = 3;									// Τοποθλετηση του Log in στην τέταρτη σειρά(gridy=3).
+        gbcLogin.gridwidth = 2;								// H παράμετρος gridwidth της κλάσης GridBagConstraints εξασφαλίζει την επέκταση του κουμπιού σε 2 γειτονικές στήλες μέσα στο grid στο container καταλαμβάνοντας το μέγιστο πλάτος με ευδιάκριτη οπτική εμφάνιση του κουμπιού λόγω του κεντραρίσματος.
+        gbcLogin.anchor = GridBagConstraints.CENTER;		// Κεντρική ευθυγράμμιση και στοίχηση.
+        pnlCenter.add(btnLogin, gbcLogin);					// Ίδια διαδικασία με τα από πάνω.
         
-        GridBagConstraints gbcLogin = (GridBagConstraints) gbc.clone();			
-        gbcLogin.gridx = 0;									
-        gbcLogin.gridy = 3;									
-        gbcLogin.gridwidth = 2;								
-        gbcLogin.anchor = GridBagConstraints.CENTER;		
-        pnlCenter.add(btnLogin, gbcLogin);					
-        
-        GridBagConstraints gbcForgot = (GridBagConstraints) gbc.clone();	 
-        gbcForgot.gridx = 0;			
-        gbcForgot.gridy = 4;			
-        gbcForgot.gridwidth = 2;		
+        // Ετικέτα "Forgot my password" — καταλαμβάνει 2 στήλες.
+        GridBagConstraints gbcForgot = (GridBagConstraints) gbc.clone();	 // Ομοίως, τοποθετείται η ετικέτα "Forgot my password" στην πέμπτη σειρά (gridy = 4) ενώ διατείνεται στις δύο στήλες και κεντράρεται.
+        gbcForgot.gridx = 0;			// από 1η στήλη ξεκινάει
+        gbcForgot.gridy = 4;			// 5η σειρά
+        gbcForgot.gridwidth = 2;		// 2 στήλες πιάνει μέσα στο grid.
         gbcForgot.anchor = GridBagConstraints.CENTER;
         pnlCenter.add(lblForgot, gbcForgot);
         
-        GridBagConstraints gbcBottom = (GridBagConstraints) gbc.clone();		
+        // Προσθήκη κάτω filler στοιχείου (vertical glue) για κεντράρισμα.
+        GridBagConstraints gbcBottom = (GridBagConstraints) gbc.clone();		// Οι ρυθμίσεις είναι αντίστοιχες με αυτές για το πάνω filler(gbcTop), δίνοντάς του βάρος στην κατανομή διαθέσιμου κάθετου χώρου.
         gbcBottom.gridx = 0;
         gbcBottom.gridy = 5;
         gbcBottom.gridwidth = 2;
         gbcBottom.weighty = 1;
-        gbcBottom.fill = GridBagConstraints.VERTICAL;			
+        gbcBottom.fill = GridBagConstraints.VERTICAL;			// Προσθήκη ενός ακόμα αόρατου στοιχείου του vertical glue στο κάτω μέρος του pnlCenter με σκοπό το κατακόρυφο κεντράρισμα των στοιχείων.
         pnlCenter.add(Box.createVerticalGlue(), gbcBottom);
         
-        
-        btnLogin.addActionListener(new ActionListener() {			
-            public void actionPerformed(ActionEvent e) {			
-            	
-                String username = txtUsername.getText();			
-                String password = new String(txtPassword.getPassword());	 
-                if(username.equals("teachersadmin!") && password.equals("college7845")) {		
-            	Main_Application.startwin.setVisible(true);				
-                Main_Application.introapp.setEnabled(false);			
-                JOptionPane.showMessageDialog(Main_Application.startwin, "Successful Login!", "Login", 1);		
+        // Listeners για τα στοιχεία της φόρμας και διαχείρηση event στην περίπτωση που ο χρήστης πατάει το κουμπί Log in. Ανάλογα με τον event handler που έχουμε επιλέξει παράγεται ο παρακάτω κώδικας.
+        btnLogin.addActionListener(new ActionListener() {			// Σύνδεση του Interface ActionListener με το JButton. Πιο συγκεκριμένα κάνουμε implement την διεπαφή ActionListener για την διαχείριση των button clicks, καθώς κάθε πάτημα στο κουμπί δημιουργεί το αντίστοιχο ActionEvent με αποτέλεσμα ο Listener να υλοποιεί(implements) την διεπαφή ActionListener παρέχοντας την υλοποίηση των event-processing μεθόδων μέσα στον Listener. Όταν ο χρήστης πατάει το κουμπί(btnLogin-αντικείμενο της κλάσης JButton-για να συνδεθεί στην πλατφόρμα), δημιουργείται ένα ActionEvent καθώς το αντικείμενο ακροατή θα πρέπει να υλοποιεί(implements) την διεπαφή ActionListener ενώ η σύνδεση με τον ακροατή επιτυγχάνεται μέσω της μεθόδου addActionListener(), όπου εντός των παρενθέσεων δηλώνεται κι αρχικοποιείται μία ανώνυμη κλάση ακροατή συμβάντος. Μέσω της αφηρημένης κλάσης AbstractButton(η οποία υπάγεται στην κλάση JComponent και με την σειρά της η JComponent είναι subclass της Container, η οποία επεκτείνει την superclass όλων των γραφικών στοιχείων που είναι η Component), συγκεντρώνονται όλες οι ενέργειες μαζί(δήλωση, αρχικοποίηση, χειρισμός κώδικα).
+            public void actionPerformed(ActionEvent e) {			// Εντός των άγκιστρων της κλάσης ActionListener βρίσκεται η μέθοδος ActionPerformed με τον απαραίτητο κώδικα μέσα στα άγκιστρα για τον χειρισμό του συμβάντος. Στην συνέχεια η διεπαφή ActionListener παρέχει μία μέθοδο την actionPerformed(ActionEvent e), η οποία μέθοδος του ακροατή με όρισμα το συμβάν(e-αντικείμενο του ActionEvent παρέχοντας πληροφορίες σχετικά με το συμβάν) καλείται μόλις ο χρήστης πατήσει το κουμπί με το ποντίκι μπαίνοντας μέσα στο σώμα της μεθόδου εκτελώντας τις ενέργειες που έχουν οριστεί από τον προγραμματιστή. Πιο συγκεκριμένα κάθε φορά που θα προκύπτει κάποιο ActionEvent(από το πάτημα του κουμπιού log in) θα εκτελείται η συγκεκριμένη μέθοδος(δηλαδή η actionPerformed).
+            	// Ανάκτηση των τιμών από τα πεδία εισαγωγής
+                String username = txtUsername.getText();			// Μέσω της μεθόδου getText (της κλάσης JTextComponent) πραγματοποιείται η ανάκτηση και η επιστροφή του κειμένου που εισάγεται στο πεδίο κειμένου JTextField, που είναι το txtUsername καθώς εκχωρείται σε μία μεταβλητή που είναι τύπος δεδομένου String.
+                String password = new String(txtPassword.getPassword());	 // Μέσω της μεθόδου getPassword(της κλάσης JPasswordField) γίνεται ανάκτηση/λήψη του κωδικού πρόσβασης που εισάγεται στο πεδίο txtPassword, όπου στην ουσία μετατρέπεται σε έναν καινούργιο πίνακα από χαρακτήρες μέσω χρήσης της κλάσης String και πραγματοποιείται εκχώρηση σε μία μεταβλητή, η οποία είναι τύπος δεδομένου String.
+                if(username.equals("teachersadmin!") && password.equals("college7845")) {		// Σε αυτό το σημείο πραγματοποιείται ένας έλεγχος, εάν δηλαδή το username και το password ταυτόχρονα μέσω του λογικού τελεστή &&(ΚΑΙ-καθορίζοντας ότι θα πρέπει να ισχύουν και οι 2 συνθήκες μαζί ταυτόχρονα προτού εκχωρηθεί η πρόσβαση) ταιριάζουν οι τιμές με αυτό που έχουμε ορίσει ως παράμετρο εισόδου στην μέθοδο equals. Πιο συγκεκριμένα η μέθοδος equals επρόκειτο να συγκρίνει τη συμβολοσειρά με το καθορισμένο αντικείμενο ενώ το αποτέλεσμα είναι αληθές εάν και μόνο εάν το όρισμα δεν είναι μηδενικό και είναι αντικείμενο String που αντιπροσωπεύει την ίδια ακολουθία χαρακτήρων με αυτό το αντικείμενο.
+            	Main_Application.startwin.setVisible(true);				// Καθίσταται ορατό το πεδίο startwin που ανήκει στην κλάση Main_Application(που σημαίνει ότι εμφανίζεται στην οθόνη το δεύτερο παράθυρο που είναι το Control Panel εξαιτίας του επιτυχημένου log in από τον χρήστη).
+                Main_Application.introapp.setEnabled(false);			// Απενεργοποίηση του παραθύρου εισόδου(του πεδίου introapp που ανήκει στην κλάση Main_Application), λόγω της τιμής false που τίθεται ως όρισμα στην μέθοδο καθώς ο χρήστης δεν μπορεί να αλληλεπιδράσει πλέον με το προηγούμενο παράθυρο εστιάζοντας την προσοχή του στο τρέχον παράθυρο που είναι ενεργό καθώς εάν θέλει να αλληλεπιδράσει με το πρώτο παράθυρο πάλι μπορεί να πατήσει το κουμπί X στο παράθυρο Control Panel με αποτέλεσμα την ενεργοποίηση ξανά του προηγούμενου παραθύρου, δηλαδή του πρώτου παραθύρου.
+                JOptionPane.showMessageDialog(Main_Application.startwin, "Successful Login!", "Login", 1);		// Ο σκοπός του πλαισίου είναι η εμφάνιση ενός μηνύματος διακόπτοντας ταυτόχρονα την ροή του προγράμματος ενώ δεν επιστρέφει καμία τιμή (διότι η μέθοδος είναι void). Πιο συγκεκριμένα μέσω της μεθόδου showMessageDialog που ανήκει στην κλάση JOptionPane εμφανίζεται ένα μικρό παράθυρο διαλόγου(για επιτυχία πρόσβασης-successful login) με τίτλο παραθύρου "Login" ενώ οι παράμετροι της μεθόδου είναι το Component parentComponent(όπου στην περίπτωση που είναι null ή σε άλλη περίπτωση εάν το γονικό συστατικό-parentComponent δεν έχει παράθυρο, τότε χρησιμοποιείται ένα default Frame και εμφάνιση του πλαισίου διαλόγου κεντρικά στην οθόνη ή σύμφωνα με το default) και η δέυτερη παράμετρος της μεθόδου είναι ένα Object message(ένα αλφαριθμητικό δεδομένο εμφανίζοντας στην οθόνη ένα μήνυμα προτροπής Successful login). Στην περίπτωση που στην παράμετρο Component δηλωθεί κάποιο παράθυρο τότε το πλαίσιο διαλόγου τοποθετείται κάτω από την κορυφή του πρώτου παραθύρου και στην μέση της οριζόντιας διάστασής του καθώς στην προκειμένη περίπτωση το Component parentComponent που έχει δηλωθεί είναι το public static πεδίο startwin της κλάσης Main_Application, αφού από αυτή την κλάση θα τρέχει όλη η εφαρμογή που σημαίνει ότι το pop-up παράθυρο για το επιτυχές login θα εμφανιστεί ακριβώς πάνω από το δέυτερο παάθυρο εμφάνισης που είναι το Control Panel. Ως τρίτη παράμετρος της μεθόδου τίθεται ένα String που αναπαριστά τον τίτλο που εμφανίζεται στο πλαίσιο και η τέταρτη παράμετρος είναι ένα δεδομένο τύπου int-εναλλακτική αριθμητική τιμή-που αναπαριστά τον τύπο εικονιδιου του μηνύματος όπου στην προκειμένη περίπτωση είναι Information_Message, για αυτό έχει και την τιμή 1.
                 } else {
-                	JOptionPane.showMessageDialog(Main_Application.introapp, "Invalid Username or Password! Please try again.", "Invalid Login", JOptionPane.ERROR_MESSAGE);	
+                	JOptionPane.showMessageDialog(Main_Application.introapp, "Invalid Username or Password! Please try again.", "Invalid Login", JOptionPane.ERROR_MESSAGE);	// Σε περίπτωση λάθος εισαγωγής στοιχείων (username & password) εμφανίζεται στον χρήστη ένα pop-up παράθυρο με το μήνυμα λάθους, αν το όνομα χρήστης κι ο κωδικός πρόσβασης είναι λάθος εισηγμένα ενώ δεν επιτρέπεται η πρόσβαση στο επόμενο παράθυρο μέχρις τα στοιχεία εισαγωγής να είναι τα σωστά για να εμφανιστεί το επόμενο παράθυρο του control panel.
                 }
-               }	
-        });		
+               }	// Εδώ κλείνει η μέθοδος actionPerformed.
+        });		// Με το άγκιστρο κλείνει η ανώνυμη κλάση(ActionListener) και με την παρένθεση μαζί με το ερωτηματικό κλείνει η αριστερή παρένθεση δήλωσης καταχώρησης του ακροατή(ActionListener). Σε αυτό το σημείο τελειώνει η δήλωση και μπαίνει το ελληνικό ερωτηματικό.
         
-        lblForgot.addMouseListener(new MouseAdapter() {			
+        lblForgot.addMouseListener(new MouseAdapter() {			// Σε μία εφαρμογή είναι πολύ χρήσιμος ο χειρισμός συμβάντων του ποντικιού, καθώς η διεπαφή MouseListener με τις μεθόδους mousePressed(), mouseClicked(), mouseReleased(),mouseEntered(), mouseExited() δίνει την δυνατότητα ανίχνευσης μια σειρά από λειτουργίες του ποντικιού, όπως είναι για παράδειγμα το κλικ, η απελευθέρωση καθώς κι αν το ποντίκι εισέρχεται σε μία περιοχή ή όταν εξέρχεται από αυτήν ενώ καθεμία από τις προαναφερθείσες μεθόδους παίρνει ως όρισμα ένα αντικείμενο της κλάσης MouseEvent. Στην προκειμένη περίπτωση για το αντικείμενο lblForgot καλείται η μέθοδος addMouseListener(η οποία λαμβάνει τα mouseEvents από το component, δηλαδή ότι ο χρήστης της εφαρμογής κάνει κλικ με το ποντίκι του στο συγκεκριμένο link για την ανάκτηση κωδικού πρόσβασής του). Η διεπαφή(Interface-MouseListener) που υλοποιεί τα MouseEvents, στην προκειμένη περίπτωσηλόγω του ότι η διεπαφή έχει περισσότερες από μία μεθόδους, έχει στην διάθεσή της και μία αντίστοιχη κλάση προσαρμοστή(δηλαδή την MouseAdapter) μέσω της οποίας παρέχεται υλοποίηση (κενή) όλων των μεθόδωνπου υπάρχουν στην διεπαφή MouseListener. Αυτό έχει ως αποτέλεσμα, την δυνατότητα πού δίνεται στον προγραμματιστή να δημιουργεί την δική του κλάση επεκτείνοντας την κλάση προσαρμοστή αντί να εφαρμόσει μία διεπαφή υλοποιώντας μόνο τις μεθόδους της διεπαφής που επιθυμεί, όπου στην προκειμένη περίπτωση η κλάση προσαρμοστή είναι η MouseAdapter της διεπαφής ακροατή(MouseListener).
             @Override
-            public void mouseClicked(MouseEvent e) {			 
-            JOptionPane.showConfirmDialog(Main_Application.introapp, "Reset your password?", "Reset", JOptionPane.YES_NO_OPTION);	 
-            }	
-        });		
-    }			
+            public void mouseClicked(MouseEvent e) {			// Όταν ο χρήστης κάνει κλικ πάνω στο component(lblForgot) καλείται η Override μέθοδος, η οποία υπερκαλύπτει την μέθοδο της superclass, η mouseClicked(η οποία δεν επιστρέφει κάποια τιμή αλλά ενεργοποιείται όταν ο χρήστης με το ποντίκι του κάνει κλικ πάνω στο component και απελευθερώσει το πάτημα του ποντικιού από το component) με παράμετρο εισόδου το (e-το οποίο καθορίζει το event που θα διεξαχθεί, εξ ου που είναι τύπου MouseEvent).  
+            JOptionPane.showConfirmDialog(Main_Application.introapp, "Reset your password?", "Reset", JOptionPane.YES_NO_OPTION);	 // Εμφάνιση πλαισίου διαλόγου επιβεβαίωσης με παρόμοια διαδικασία που δηλώθηκε πιο πάνω και τώρα το μήνυμα πρόκειται για ανάκτηση κωδικού πρόσβασης. Ορίζεται ως γονικό component το public static πεδίο introapp, το οποίο συμβάλει στο κεντράρισμα του μικρού παραθύρου διαλόγου σύμφωνα με αυτό το παράθυρο στο οποίο ανήκει το πεδίο introapp και είναι το πρώτο παράθυρο. Τα επόμενα ορίσματα έχουν να κάνουν με το μήνυμα και τον τίτλο του παραθύρου διαλόγου εμφανίζοντας μία ερώτηση στον χρήστη για ανάκτηση του κωδικού πρόσβασης κι αναμένοντας μία προκαθορισμένη απάντηση (YES/NO) επιστρέφοντας μία ακέραια τιμή (που είναι η επιλογή του χρήστη είτε πατώντας το κουμπί YES, είτε πατώντας το κουμπί NO είτε απλά πατώντας το κλασικό κουμπί X βγαίνονατς από το παράθυρο διαλόγου), καθώς το τελευταίο όρισμα αντιπροσωπεύει μία σταθερά (YES_NO_OPTION) που στην ουσία καθορίζει τις επιλογές που θα έχει ο χρήστης διαθέτωντας το πλαίσιο διαλόγου 2 κουμπιά το YES και το NO (που αποτελούν τις παραμέτρους που ορίστηκαν), εφιστώντας την προσοχή στον χρήστη ότι θα πρέπει να απαντήσει θετικά ή αρνητικά στην ερώτηση, διότι πατώντας το κουμπί YES εμπρόκειτο να ανακτήσει τον κωδικό πρόσβασής του, κάτι το οποίο είναι πολύ καθοριστικό προκειμένου να συνεχίσει στα επόμενα βήματα και να μπορέσει να πλοηγηθεί χωρίς προβλήματα στην εφαρμογή.
+            }	// Εδώ κλείνει το σώμα της μεθόδου.
+        });		// Εδώ κλείνει η MouseListener που επεκτείνει την MouseAdapter και ολοκληρώνεται η δήλωση της μεθόδου.
+    }			// Εδώ κλείνει ο κατασκευαστής(IntroApplicationPlatform).
     
-   // public static void main(String[] args) {						 
-       // EventQueue.invokeLater(new Runnable() {					 
-          //  public void run() {									
-             //   try {								
-                //    IntroApplicationPlatform frame = new IntroApplicationPlatform();		
-                //    frame.setVisible(true);			
-              //  } catch (Exception e) {				
-               //     e.printStackTrace();			
+   // public static void main(String[] args) {						// Η εκτέλεση του κάθε παραθύρου ξεχωριστά ξεκινάει από την μέθοδο main και καλώντας τον κατασκευαστή IntroApplicationPlatform() ή τον αντίστοιχο κατασκευαστή της κάθε κλάσης που επεκτείνει την JFrame κατά την δημιουργία αντικειμένου, προκειμένου να εκτελέσει όλο τον κώδικα που υπάρχει μέσα στο σώμα του κατασκευαστή. 
+       // EventQueue.invokeLater(new Runnable() {					// Εντός της μεθόδου main η κλάση EventQueue(η οποία επεκτείνει την κλάση Object) αποστέλλει με μία συγκεκριμένη σειρά τα συμβάντα(events) που προκαλούνται καλώντας τη μέθοδο αποστολής (AWTEvent) καθώς χρησιμοποιείται για την διαχείριση του thread(EDT-Event Dispatch Thread) στο οποίο τρέχουν τα components της Swing. Για αυτή την κλάση, λοιπόν, την EventQueue καλείται η public static void μέθοδος invokeLater(Runnable runnable), η οποία προκαλεί το runnable να καλέσει τη μέθοδο εκτέλεσης στο νήμα αποστολής του συστήματος EventQueue, ενώ αυτό θα συμβεί μετά την επεξεργασία όλων των εκκρεμών συμβάντων με παράμετρο της μεθόδου ένα runnable(του οποίου η μέθοδος εκτέλεσης εκτελείται ασύγχρονα στο νήμα αποστολής συμβάντων του συστήματος EventQueue). Στην προκειμένη περίπτωση, δημιουργείται μία ανώνυμη εσωτερική κλάση, η οποία υλοποιεί την διεπαφή(interface-Runnable).  
+          //  public void run() {									// Η μέθοδος run() είναι μία αφηρημένη μέθοδος, η οποία δηλώνεται από την διεπαφή (Runnable) και υλοποιείται από την κλάση Thread καθώς ο χρονοπρογραμματιστής καλεί την συγκεκριμένη μέθοδο προκειμένου να εκτελεστεί το νήμα ενώ ταυτόχρονα η run() ορίζει κι εκτελεί το σύνολο των εντολών που αποτελούν το νήμα. Σε αυτό το σημείο υλοποιείται η μέθοδος run() μέσα στο ανώνυμο αντικείμενο(Runnable) και παραδίδεται στο invokeLater, η οποία παρέχει τον κώδικα που θα εκτελεστεί όταν το Runnable αποσταλεί από το EDT, καθώς εντός του σώματος της μεθόδου δημιουργείται το κύριο παράθυρο της εφαρμογής.
+             //   try {								// Η χρήση μηχανισμού try-catch, διασφαλίζει ότι η εφαρμογή θα συνεχίσει να εκτελείται, διότι σε περίπτωση που προκύψουν Exceptions θα τυπωθούν στον προγραμματιστή στο console για να διορθωθούν.
+                //    IntroApplicationPlatform frame = new IntroApplicationPlatform();		// Εντός της μεθόδου main δημιουργώ το αντικείμενο με όνομα (frame) της υποκλάσης IntroApplicationPlatform με τον τελεστή new για την δημιουργία του αντικειμένου καλώντας τον κατασκευαστή της subclass(IntroApplicationPlatform). Αποτελεί το κύριο παράθυρο της εφαρμογής που θα εμφανιστεί στον χρήστη, ενώ εντός του κατασκευαστή πραγματοποιούνται όλες οι ρυθμίσεις του παραθύρου(διάταξη των συστατικών, προσθήκη Listeners).
+                //    frame.setVisible(true);			// Με τρέχον αντικείμενο το frame καλώ την μέθοδο setVisible. Πραγματοποίηση εμφάνισης του παραθύρου με την μέθοδο setVisible(), η οποία δέχεται ως παράμετρο εισόδου μία boolean τιμή και σε αυτή την περίπτωση που το παράθυρο θέλω να φαίνεται θα θέσω ως παράμετρο εισόδου την τιμή true. Στην περίπτωση που η τιμή της παραμέτρου της μεθόδου ήταν false το παράθυρο δεν θα χανόταν απλώς θα παρέμενε κρυφό.
+              //  } catch (Exception e) {				// Χειρισμός εξαιρέσεων, οι οποίες πρέπει να είναι τύπου Exception, καθώς η μεταβλητή e αναπαριστά αυτή την εξαίρεση που καταγράφηκε.
+               //     e.printStackTrace();			// Για το αντικείμενο (e, που αναπαριστά την καταγεγραμμένη εξαίρεση), καλείται η μέθοδος public void printStackTrace(), η οποία δίνει την δυνατότητα στον προγραμματιστή να προχωρήσει σε debugging(=αποσφαλμάτωση) του κώδικα εκτυπώνοντας στο console τις πληροφορίες για το σημείο που προέκυψε το σφάλμα δίχως την ολική κατάρευση της εφαρμογής. Η μέθοδος public void printStackTrace() ανήκει στην κλάση java.lang.Throwable(η οποία επεκτείνει την κλάση java.lang.Object) και υλοποιεί(implements την διεπαφή Serializable). Επομένως ανάγεται το συμπέρασμα ότι η κλάση Exception(που είναι η direct subclass της κλάσης Throwable) κληρονομεί την μέθοδο public void printStackTrace().
               //  }
-         //   }		
-      //  });			
-    // }				
+         //   }		// Εδώ κλείνει η μέθοδος run().
+      //  });			// Εδώ κλείνει η ανώνυμη κλάση Runnable και η κλήση της μεθόδου invokeLater.
+    // }				// Εδώ κλείνει η main μέθοδος.
 
-	}
+	}	// Εδώ κλείνει η κλάση.
