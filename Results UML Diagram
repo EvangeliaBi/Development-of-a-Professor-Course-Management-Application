@@ -1,0 +1,15 @@
+Results
+- contentPane : JPanel
+- txt_ID : JTextField
+- txt_Name : JTextField
+- txt_LName : JTextField
+- rsData : ResultSet
+
++ main(String[])
++ run() 
++ setResultSet(ResultSet)
++ Records()
++ displayTeacher(int, String, String)
+- clearForm()
+- shownextResult()
+- updatedRecords()
