@@ -1,0 +1,6 @@
+Application
+- contentPane : JPanel
++ conn : Connection
+
++ main(String[])
++ run() 
