@@ -15,11 +15,13 @@ Skills:
 
 • Java Object-Oriented Programming (OOP): break the application into clear, independent pieces (classes, interfaces).
 
-• Function categorization: separation of UI, business logic, and data access • Inheritance: creating common methods for code reuse.
+• Function categorization: separation of UI, business logic, and data access.
+
+• Inheritance: creating common methods for code reuse.
 
 • Encapsulation: hiding database logic behind CRUD methods. 
 
-• Polymorphism: using a common interface for different types of entities (e.g., teachers/courses) Event-Driven Programming User actions (clicking buttons, menu selections) lead to the execution of specific methods. 
+• Polymorphism: using a common interface for different types of entities (e.g., teachers/courses). Event-Driven Programming User actions (clicking buttons, menu selections) lead to the execution of specific methods. 
 
 • ActionListeners in Swing components for immediate response to clicks.
 
@@ -29,7 +31,9 @@ Skills:
 
 • Use of WindowBuilder for drag-and-drop placement of components.
 
-• Custom JPanel, JFrame, JTable for displaying lists of teachers • Layout Managers (BorderLayout, GridBagLayout) for flexible layout.
+• Custom JPanel, JFrame, JTable for displaying lists of teachers.
+
+• Layout Managers (BorderLayout, GridBagLayout) for flexible layout.
 
 • Styling: settings for fonts, colors, and icons for a user-friendly environment Database & JDBC Data storage and retrieval were done through MySQL with network connection. 
 
