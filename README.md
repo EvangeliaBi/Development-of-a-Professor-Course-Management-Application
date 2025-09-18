@@ -27,7 +27,9 @@ Skills:
 
 • Binding callbacks to Insert, Update, Delete buttons. 
 
-• Coordinating UI thread so that database operations do not block the display • Exception handling in runtime events (e.g., invalid input data) GUI Development with Swing and WindowBuilder Designing the graphical interface has become quick and coherent.
+• Coordinating UI thread so that database operations do not block the display.
+
+• Exception handling in runtime events (e.g., invalid input data) GUI Development with Swing and WindowBuilder designing the graphical interface has become quick and coherent.
 
 • Use of WindowBuilder for drag-and-drop placement of components.
 
