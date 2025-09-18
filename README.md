@@ -37,7 +37,7 @@ Skills:
 
 • Layout Managers (BorderLayout, GridBagLayout) for flexible layout.
 
-• Styling: settings for fonts, colors, and icons for a user-friendly environment Database & JDBC Data storage and retrieval were done through MySQL with network connection. 
+• Styling: settings for fonts, colors, and icons for a user-friendly environment. Database & JDBC Data storage and retrieval were done through MySQL with network connection. 
 
 • Database schema design with tables for teachers and courses.
 
